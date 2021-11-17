@@ -1,6 +1,3 @@
----
-output: html_document
----
 
 #SpringBoot Project Winter 2122
 
