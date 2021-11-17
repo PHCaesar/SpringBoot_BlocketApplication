@@ -1,13 +1,12 @@
+# SpringBoot Project Winter 2122
 
-#SpringBoot Project Winter 2122
-
-##Team :
+## Team :
 
 * Philipp Cserich
 * Bernhard Siegl
 * Timon Reiter
 
-##Description :
+## Description :
 
 ```{r}
 This Project is used for learning purposes.
