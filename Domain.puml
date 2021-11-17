@@ -1,0 +1,80 @@
+@startuml
+
+class User <<Entity>>{
+    name : Name
+    username  : String
+    birthDate : LocalDate
+    permissions : List<Permission>
+    Firstname : String
+    Lastname : String
+}
+
+class Surname <<value Object>>{
+    name : String
+}
+
+abstract Item {
+    name : String
+    size : Integer
+}
+
+class Mob <<Entity>>{
+    name : String
+    drops : List<Item>
+    type : MobType
+}
+
+class Weapon <<Entity>>{
+    name : String
+    damage : Integer
+    classification : WeaponClass
+}
+
+class Block <<Entity>>{
+    name : String
+    size : Integer
+    blockDurability : Integer
+}
+
+enum WeaponClass {
+    MELEE
+    RANGED
+    MAGE
+    BENDER
+}
+
+class NonPlayerCharacter <<Entity>>{
+    name : String
+    health : Float
+    shopItems : List<Item>
+}
+
+enum Permission{
+    READ
+    WRITE
+}
+
+enum MobType{
+    FRIENDLY
+    AGGRESSIVE
+}
+
+class GameContent <<Entity>>{
+    itemsInGame : List<Item>
+    mobsInGame : List<Mob>
+    nonPlayerCharacterInGame : List<NonPlayerCharacter>
+    loggedInUser : User
+}
+
+User "1" o-down- "0..n" Surname : "has"
+Item <|-left- Weapon
+Item <|-down- Block
+Weapon -- WeaponClass
+Mob -- MobType
+GameContent -- User
+Item "0..n" -right-* "1" GameContent : "has"
+Mob "0..n" -left-* "1" GameContent : "has"
+NonPlayerCharacter "0..n" -down-* "1" GameContent : "has"
+Permission "0..n" -right-o "1" User
+
+@enduml
