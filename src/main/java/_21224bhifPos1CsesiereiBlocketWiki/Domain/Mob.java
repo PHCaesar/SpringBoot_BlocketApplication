@@ -1,41 +1,46 @@
 package _21224bhifPos1CsesiereiBlocketWiki.Domain;
 
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.List;
 import java.util.function.Predicate;
 
+/*
+ * @Author : Cse19455@spengergasse.at
+ *
+ * Mob Model Class
+ */
+
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 public class Mob {
 
     private long id;
+
+    @Getter @Setter
     private String name;
+
+    @Getter @Setter
     private List<Item> drops;
+
+    @Getter @Setter
     private MobType type;
 
     Predicate<MobType> isFriendly = vl -> vl.equals(MobType.FRIENDLY);
     Predicate<MobType> isAggressive = vl -> vl.equals(MobType.AGGRESSIVE);
     Predicate<List<Item>> hasDrops = vl -> vl.size()!=0;
 
-
-    @Id
-    @GeneratedValue
-    public long getId() {
+    @Id @GeneratedValue
+    public Long getId() {
         return id;
     }
-    public void setId(long id) {
+
+    public void setId(Long id) {
         this.id = id;
     }
-    public String getName() { return name; }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public List<Item> getDrops() { return drops; }
-    public void setDrops(List<Item> drops) { this.drops = drops; }
-    public MobType getType() { return type; }
-    public void setType(MobType type) { this.type = type; }
 }
