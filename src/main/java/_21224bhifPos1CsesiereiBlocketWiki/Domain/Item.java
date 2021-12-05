@@ -1,22 +1,29 @@
 package _21224bhifPos1CsesiereiBlocketWiki.Domain;
 
 import lombok.*;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+
+import javax.persistence.*;
 import java.util.function.Predicate;
 
-@NoArgsConstructor
-@AllArgsConstructor
+/*
+ * @Author: Cse19455
+ *
+ * Item Model Class
+ */
+
+@Entity
+@ToString @EqualsAndHashCode
+@NoArgsConstructor @AllArgsConstructor
+
+@Table(name = "Items")
+
 public class Item {
 
     private Long id;
-    @Getter @Setter
+    @Getter @Setter @Column(name = "name")
     private String name;
-    @Getter @Setter
+    @Getter @Setter @Column(name = "size")
     private int size;
-
-    Predicate<String> hasName = vl -> !vl.isBlank();
-    Predicate<Integer> hasSize = vl -> vl.intValue()!=0;
 
     @Id @GeneratedValue
     public Long getId() {

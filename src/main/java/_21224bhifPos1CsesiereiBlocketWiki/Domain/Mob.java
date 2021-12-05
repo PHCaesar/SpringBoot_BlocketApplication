@@ -2,10 +2,7 @@ package _21224bhifPos1CsesiereiBlocketWiki.Domain;
 
 import lombok.*;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -16,30 +13,26 @@ import java.util.function.Predicate;
  */
 
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
+@ToString @EqualsAndHashCode
+@NoArgsConstructor @AllArgsConstructor
+
+@Table(name = "Mobs")
+
 public class Mob {
 
-    private long id;
-
-    @Getter @Setter
+    @Id @GeneratedValue
+    private Long id;
+    @Getter @Setter @Column(name = "name")
     private String name;
-
     @Getter @Setter
+    @OneToMany @Column(name = "drops")
     private List<Item> drops;
-
-    @Getter @Setter
+    @Getter @Setter @Embedded @Column(name = "mobtype")
     private MobType type;
 
-    Predicate<MobType> isFriendly = vl -> vl.equals(MobType.FRIENDLY);
-    Predicate<MobType> isAggressive = vl -> vl.equals(MobType.AGGRESSIVE);
-    Predicate<List<Item>> hasDrops = vl -> vl.size()!=0;
-
-    @Id @GeneratedValue
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }

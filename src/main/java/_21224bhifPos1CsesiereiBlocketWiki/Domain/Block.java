@@ -1,9 +1,8 @@
 package _21224bhifPos1CsesiereiBlocketWiki.Domain;
 
 import lombok.*;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+
+import javax.persistence.*;
 import java.util.function.Predicate;
 
 /*
@@ -14,27 +13,13 @@ import java.util.function.Predicate;
  */
 
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
-public class Block {
+@ToString @EqualsAndHashCode
+@NoArgsConstructor @AllArgsConstructor
 
-    private long id;
-    @Getter @Setter
-    private String name;
-    @Getter @Setter
-    private int size;
-    @Getter @Setter
+@Table(name = "Blocks")
+public class Block extends Item{
+
+    @Getter @Setter @Column(name = "durability")
     private int blockDurability;
 
-    Predicate<String> hasName = vl -> !vl.isBlank();
-    Predicate<Integer> hasSize = vl -> vl.intValue()!=0;
-    Predicate<Integer> hasBlockDurability = vl -> vl.intValue()!=0;
-
-    @Id @GeneratedValue
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
 }

@@ -1,25 +1,29 @@
 package _21224bhifPos1CsesiereiBlocketWiki.Domain;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import lombok.*;
+import javax.persistence.*;
 import java.util.List;
 
+/*
+ * @Author : Cse19455@spengergasse.at
+ *
+ * NonPlayerCharacter Model Class
+ */
+
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
+@ToString @EqualsAndHashCode
+@NoArgsConstructor @AllArgsConstructor
+
+@Table(name = "NonPlayerCharacters")
+
 public class NonPlayerCharacter {
 
+
     private String name;
-    @Getter @Setter
+    @Getter @Setter @Column(name = "health")
     private float health;
-    @Getter @Setter
+    @Getter @Setter @OneToMany @Column(name = "items")
     private List<Item> shopItems;
 
     @Id
@@ -27,7 +31,6 @@ public class NonPlayerCharacter {
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }

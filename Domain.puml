@@ -1,7 +1,8 @@
 @startuml
 
 class User <<Entity>>{
-    name : Name
+    name : String
+    surnames : List<Surname>
     username  : String
     birthDate : LocalDate
     permissions : List<Permission>

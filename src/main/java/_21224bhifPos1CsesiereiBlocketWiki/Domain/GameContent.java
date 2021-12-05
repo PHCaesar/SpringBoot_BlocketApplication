@@ -1,34 +1,35 @@
 package _21224bhifPos1CsesiereiBlocketWiki.Domain;
 
 import lombok.*;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+
+import javax.persistence.*;
 import java.util.List;
 import java.util.function.Predicate;
 
+/*
+ * @Author: Cse19455
+ *
+ * GameContent Model Class
+ */
+
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
+@ToString @EqualsAndHashCode
+@NoArgsConstructor @AllArgsConstructor
+
+@Table(name = "GameContents")
 public class GameContent {
 
+    @Id @GeneratedValue
     private Long id;
-    @Getter @Setter
+    @Getter @Setter @OneToMany @Column(name = "items")
     private List<Item> itemsInGame;
-    @Getter @Setter
+    @Getter @Setter @OneToMany @Column(name = "mobs")
     private List<Mob> mobsInGame;
-    @Getter @Setter
+    @Getter @Setter @OneToMany @Column(name = "nonplayercharacter")
     private List<NonPlayerCharacter> nonPlayerCharactersInGame;
-    @Getter @Setter
+    @Getter @Setter @OneToOne @Column(name = "user")
     private User loggedInUser;
 
-    Predicate<List<Item>> hasItems = vl -> vl.size()!=0;
-    Predicate<List<Mob>> hasMobs = vl -> vl.size()!=0;
-    Predicate<List<NonPlayerCharacter>> hasNonPlayerCharacters = vl -> vl.size()!=0;
-    Predicate<List<User>> hasUser = vl -> vl.size()!=0;
-
-    @Id
-    @GeneratedValue
     public Long getId() {
         return id;
     }

@@ -8,6 +8,7 @@ import javax.persistence.Embeddable;
  * Mobtypes for further Mob specification
  */
 
+@Embeddable
 public enum MobType {
     FRIENDLY,
     AGGRESSIVE,
