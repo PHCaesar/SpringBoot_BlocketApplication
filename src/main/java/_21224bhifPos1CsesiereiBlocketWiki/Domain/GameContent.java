@@ -1,7 +1,6 @@
 package _21224bhifPos1CsesiereiBlocketWiki.Domain;
 
-import lombok.NoArgsConstructor;
-
+import lombok.*;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,13 +9,17 @@ import java.util.function.Predicate;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 public class GameContent {
 
     private Long id;
-
+    @Getter @Setter
     private List<Item> itemsInGame;
+    @Getter @Setter
     private List<Mob> mobsInGame;
+    @Getter @Setter
     private List<NonPlayerCharacter> nonPlayerCharactersInGame;
+    @Getter @Setter
     private User loggedInUser;
 
     Predicate<List<Item>> hasItems = vl -> vl.size()!=0;
@@ -32,31 +35,4 @@ public class GameContent {
     public void setId(Long id) {
         this.id = id;
     }
-
-    public List<Item> getItemsInGame() {
-        return itemsInGame;
-    }
-    public void setItemsInGame(List<Item> itemsInGame) {
-        this.itemsInGame = itemsInGame;
-    }
-    public List<Mob> getMobsInGame() {
-        return mobsInGame;
-    }
-    public void setMobsInGame(List<Mob> mobsInGame) {
-        this.mobsInGame = mobsInGame;
-    }
-    public List<NonPlayerCharacter> getNonPlayerCharactersInGame() {
-        return nonPlayerCharactersInGame;
-    }
-    public void setNonPlayerCharactersInGame(List<NonPlayerCharacter> nonPlayerCharactersInGame) {
-        this.nonPlayerCharactersInGame = nonPlayerCharactersInGame;
-    }
-    public User getLoggedInUser() {
-        return loggedInUser;
-    }
-    public void setLoggedInUser(User loggedInUser) {
-        this.loggedInUser = loggedInUser;
-    }
-
-
 }
