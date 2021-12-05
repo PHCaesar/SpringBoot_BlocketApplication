@@ -1,7 +1,10 @@
 package _21224bhifPos1CsesiereiBlocketWiki.Domain;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,10 +13,13 @@ import java.util.List;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 public class NonPlayerCharacter {
 
     private String name;
+    @Getter @Setter
     private float health;
+    @Getter @Setter
     private List<Item> shopItems;
 
     @Id
@@ -26,22 +32,5 @@ public class NonPlayerCharacter {
         this.name = name;
     }
 
-
-    public List<Item> getShopItems() {
-        return shopItems;
-    }
-
-    public void setShopItems(List<Item> shopItems){
-        this.shopItems=shopItems;
-    }
-
-
-    public float getHealth(){
-        return health;
-    }
-
-    public void setHealth(float health) {
-        this.health = health;
-    }
 
 }
