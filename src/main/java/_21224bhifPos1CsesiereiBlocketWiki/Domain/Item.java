@@ -12,7 +12,7 @@ import java.util.function.Predicate;
  */
 
 @Entity
-@ToString @EqualsAndHashCode
+@Data
 @NoArgsConstructor @AllArgsConstructor
 
 @Table(name = "Items")
@@ -20,9 +20,7 @@ import java.util.function.Predicate;
 public class Item {
 
     private Long id;
-    @Getter @Setter @Column(name = "name")
     private String name;
-    @Getter @Setter @Column(name = "size")
     private int size;
 
     @Id @GeneratedValue

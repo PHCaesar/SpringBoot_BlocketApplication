@@ -24,17 +24,17 @@ public class User {
     @Id @GeneratedValue
     private Long id;
 
-    @Getter @Setter @OneToMany
+    @OneToMany
     private List<Surname> surnames;
-    @Getter @Setter @Column(name = "firstname")
-    private String Firstname;
-    @Getter @Setter @Column(name = "name")
+
+    private String firstname;
+
     private String name;
-    @Getter @Setter @Column(name = "username")
+
     private String username;
-    @Getter @Setter @Column(name = "birthDate")
+
     private LocalDate birthDate;
-    @Getter @Setter @ElementCollection @Column(name = "permissions")
+    @ElementCollection
     private List<Permission> permissions;
 
     public Long getId() {

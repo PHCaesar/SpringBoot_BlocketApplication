@@ -13,7 +13,7 @@ import java.util.function.Predicate;
  */
 
 @Entity
-@ToString @EqualsAndHashCode
+@Data
 @NoArgsConstructor @AllArgsConstructor
 
 @Table(name = "Mobs")
@@ -22,12 +22,10 @@ public class Mob {
 
     @Id @GeneratedValue
     private Long id;
-    @Getter @Setter @Column(name = "name")
     private String name;
-    @Getter @Setter
-    @OneToMany @Column(name = "drops")
+    @OneToMany
     private List<Item> drops;
-    @Getter @Setter @Embedded @Column(name = "mobtype")
+    @Embedded
     private MobType type;
 
     public Long getId() {

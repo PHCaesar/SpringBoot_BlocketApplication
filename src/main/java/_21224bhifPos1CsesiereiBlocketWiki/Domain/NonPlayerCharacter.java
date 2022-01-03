@@ -12,7 +12,7 @@ import java.util.List;
  */
 
 @Entity
-@ToString @EqualsAndHashCode
+@Data
 @NoArgsConstructor @AllArgsConstructor
 
 @Table(name = "NonPlayerCharacters")
@@ -21,9 +21,8 @@ public class NonPlayerCharacter {
 
 
     private String name;
-    @Getter @Setter @Column(name = "health")
     private float health;
-    @Getter @Setter @OneToMany @Column(name = "items")
+    @OneToMany
     private List<Item> shopItems;
 
     @Id

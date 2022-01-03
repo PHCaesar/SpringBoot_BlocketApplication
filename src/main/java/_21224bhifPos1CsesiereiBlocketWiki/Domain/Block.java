@@ -13,13 +13,12 @@ import java.util.function.Predicate;
  */
 
 @Entity
-@ToString @EqualsAndHashCode
+@Data
 @NoArgsConstructor @AllArgsConstructor
 
 @Table(name = "Blocks")
 public class Block extends Item{
 
-    @Getter @Setter @Column(name = "durability")
     private int blockDurability;
 
 }

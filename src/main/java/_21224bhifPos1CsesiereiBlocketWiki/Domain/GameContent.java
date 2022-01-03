@@ -13,7 +13,7 @@ import java.util.function.Predicate;
  */
 
 @Entity
-@ToString @EqualsAndHashCode
+@Data
 @NoArgsConstructor @AllArgsConstructor
 
 @Table(name = "GameContents")
@@ -21,13 +21,13 @@ public class GameContent {
 
     @Id @GeneratedValue
     private Long id;
-    @Getter @Setter @OneToMany @Column(name = "items")
+    @OneToMany
     private List<Item> itemsInGame;
-    @Getter @Setter @OneToMany @Column(name = "mobs")
+    @OneToMany
     private List<Mob> mobsInGame;
-    @Getter @Setter @OneToMany @Column(name = "nonplayercharacter")
+    @OneToMany
     private List<NonPlayerCharacter> nonPlayerCharactersInGame;
-    @Getter @Setter @OneToOne @Column(name = "user")
+    @OneToOne
     private User loggedInUser;
 
     public Long getId() {

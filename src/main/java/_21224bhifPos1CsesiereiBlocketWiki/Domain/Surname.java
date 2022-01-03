@@ -20,6 +20,7 @@ import javax.persistence.Table;
 public class Surname {
 
     private String name;
+
     public String getName() {
         return name;
     }

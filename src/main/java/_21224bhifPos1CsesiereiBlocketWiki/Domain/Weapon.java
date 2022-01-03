@@ -12,18 +12,17 @@ import java.util.function.Predicate;
  */
 
 @Entity
-@ToString @EqualsAndHashCode
+@Data
 @NoArgsConstructor @AllArgsConstructor
 
 @Table(name = "Weapons")
 
 public class Weapon extends Item {
 
-    @Getter @Setter @Column(name = "description")
     private String description;
-    @Getter @Setter @Column(name = "damage")
     private int damage;
-    @Getter @Setter @Embedded @Column(name = "weapon-class")
+
+    @Embedded
     private WeaponClass classification;
 
 }
