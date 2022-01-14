@@ -12,10 +12,9 @@ import java.util.function.Predicate;
  * Block Model Class
  */
 
-@Entity
 @Data
 @NoArgsConstructor @AllArgsConstructor
-
+@Entity
 @Table(name = "Blocks")
 public class Block extends Item{
 

@@ -3,7 +3,7 @@ package _21224bhifPos1CsesiereiBlocketWiki.Domain;
 import javax.persistence.Embeddable;
 
 /*
- * @Author : Cse19455@spengergasse.at
+ * @Author : [Philipp.cserich@gmail.com]
  *
  * Available Weaponclasses in the Game
  */

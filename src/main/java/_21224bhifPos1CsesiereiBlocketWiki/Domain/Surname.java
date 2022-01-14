@@ -1,13 +1,12 @@
 package _21224bhifPos1CsesiereiBlocketWiki.Domain;
 
 import lombok.*;
+import org.springframework.data.jpa.domain.AbstractPersistable;
 
-import javax.persistence.Embeddable;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /*
- * @Author : Cse19455@spengergasse.at
+ * @Author : [Philipp.cserich@gmail.com]
  *
  * Surname Model Class
  */
@@ -15,17 +14,16 @@ import javax.persistence.Table;
 @Entity @Data
 @NoArgsConstructor @AllArgsConstructor
 @Builder
-
-@Embeddable
-public class Surname {
+public class Surname extends AbstractPersistable<Long> {
 
     private String name;
-
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
 
 }
+

@@ -4,7 +4,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 
 /*
- * @Author : Cse19455@spengergasse.at
+ * @Author : [Philipp.cserich@gmail.com]
  *
  * Permissions
  */

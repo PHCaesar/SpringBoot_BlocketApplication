@@ -1,6 +1,7 @@
 package _21224bhifPos1CsesiereiBlocketWiki.Domain;
 
 import lombok.*;
+import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.lang.model.element.Name;
 import javax.persistence.*;
@@ -8,7 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 /*
- * @Author : Cse19455@spengergasse.at
+ * @Author : [Philipp.cserich@gmail.com]
  *
  * User Model Class
  */
@@ -16,13 +17,9 @@ import java.util.List;
 @Data
 @NoArgsConstructor @AllArgsConstructor
 @Builder
-
 @Entity
 @Table(name = "Users")
-public class User {
-
-    @Id @GeneratedValue
-    private Long id;
+public class User extends AbstractPersistable<Long> {
 
     @OneToMany
     private List<Surname> surnames;
@@ -36,12 +33,5 @@ public class User {
     private LocalDate birthDate;
     @ElementCollection
     private List<Permission> permissions;
-
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
 
 }

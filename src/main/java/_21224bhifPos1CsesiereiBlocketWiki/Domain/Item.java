@@ -1,12 +1,13 @@
 package _21224bhifPos1CsesiereiBlocketWiki.Domain;
 
 import lombok.*;
+import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
 import java.util.function.Predicate;
 
 /*
- * @Author: Cse19455
+ * @Author: [Philipp.cserich@gmail.com]
  *
  * Item Model Class
  */
@@ -14,21 +15,10 @@ import java.util.function.Predicate;
 @Entity
 @Data
 @NoArgsConstructor @AllArgsConstructor
-
 @Table(name = "Items")
+public class Item extends AbstractPersistable<Long> {
 
-public class Item {
-
-    private Long id;
     private String name;
     private int size;
-
-    @Id @GeneratedValue
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
 
 }

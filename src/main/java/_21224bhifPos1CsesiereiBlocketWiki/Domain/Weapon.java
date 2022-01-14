@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.function.Predicate;
 
 /*
- * @Author : Cse19455@spengergasse.at
+ * @Author : [Philipp.cserich@gmail.com]
  *
  * Weapon Model Class
  */
