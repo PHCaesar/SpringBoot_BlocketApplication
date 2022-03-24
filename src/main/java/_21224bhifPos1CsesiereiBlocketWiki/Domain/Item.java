@@ -1,24 +1,18 @@
 package _21224bhifPos1CsesiereiBlocketWiki.Domain;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
-import javax.persistence.*;
-import java.util.function.Predicate;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
-/*
- * @Author: [Philipp.cserich@gmail.com]
- *
- * Item Model Class
- */
-
-@Entity
+@AllArgsConstructor @NoArgsConstructor
+@Inheritance(strategy = InheritanceType.JOINED)
 @Data
-@NoArgsConstructor @AllArgsConstructor
-@Table(name = "Items")
-public class Item extends AbstractPersistable<Long> {
-
+public abstract class Item extends AbstractPersistable<Long> {
     private String name;
     private int size;
-
 }

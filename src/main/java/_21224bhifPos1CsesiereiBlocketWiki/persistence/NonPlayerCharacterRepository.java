@@ -15,6 +15,5 @@ public interface NonPlayerCharacterRepository extends JpaRepository<NonPlayerCha
 {
 
     List<NonPlayerCharacter> findByShopItemsNotNull();
-
     //Custom Repo for finding NPC that sells a specific Product (Item)
 }

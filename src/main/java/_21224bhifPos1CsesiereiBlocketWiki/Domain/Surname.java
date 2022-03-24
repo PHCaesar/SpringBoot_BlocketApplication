@@ -15,15 +15,7 @@ import javax.persistence.*;
 @NoArgsConstructor @AllArgsConstructor
 @Builder
 public class Surname extends AbstractPersistable<Long> {
-
     private String name;
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
 }
 

@@ -15,13 +15,13 @@ import java.util.function.Predicate;
 
 @Entity
 @Data
+@Builder
 @NoArgsConstructor @AllArgsConstructor
 @Table(name = "Mobs")
 public class Mob extends AbstractPersistable<Long> {
-
     private String name;
-    @OneToMany
-    private List<Item> drops;
+    @OneToMany(targetEntity = UsableItem.class,fetch = FetchType.EAGER)
+    private List<UsableItem> drops;
     @Embedded
     private MobType type;
 

@@ -11,6 +11,7 @@ import java.util.List;
 public interface MobRepositoryCustom {
     void insert(Mob mob);
 
+    Mob findByName(String name);
     List<Mob> findByDrops(List<Item> drops);
     List<Mob> findByType(MobType type);
 }

@@ -7,23 +7,17 @@ import javax.persistence.*;
 import java.util.function.Predicate;
 
 /*
- * @Author : [Philipp.cserich@gmail.com]
+ * @Author: [Philipp.cserich@gmail.com]
  *
- * Weapon Model Class
+ * Item Model Class
  */
 
 @Entity
 @Data
+@Builder
 @NoArgsConstructor @AllArgsConstructor
-@Table(name = "Weapons")
-
-public class Weapon extends Item
-{
-    public Weapon(String name,int size) {super(name,size);}
+@Table(name = "UsableItems")
+public class UsableItem extends Item {
+    public UsableItem(String name,int size){super(name,size);}
     private String description;
-    private int damage;
-
-    @Embedded
-    private WeaponClass classification;
-
 }

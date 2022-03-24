@@ -1,6 +1,7 @@
 package _21224bhifPos1CsesiereiBlocketWiki.Domain;
 
 import lombok.*;
+import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
 import java.util.function.Predicate;
@@ -12,12 +13,12 @@ import java.util.function.Predicate;
  * Block Model Class
  */
 
-@Data
-@NoArgsConstructor @AllArgsConstructor
 @Entity
 @Table(name = "Blocks")
-public class Block extends Item{
-
+@NoArgsConstructor @AllArgsConstructor
+@Data
+public class Block extends Item
+{
+    public Block(String name,int size) {super(name,size);}
     private int blockDurability;
-
 }

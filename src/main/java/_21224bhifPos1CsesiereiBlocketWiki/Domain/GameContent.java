@@ -5,7 +5,6 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.function.Predicate;
 
 /*
  * @Author: [Philipp.cserich@gmail.com]
@@ -15,17 +14,22 @@ import java.util.function.Predicate;
 
 @Entity
 @Data
+@Builder
 @NoArgsConstructor @AllArgsConstructor
 @Table(name = "GameContents")
 public class GameContent extends AbstractPersistable<Long> {
 
-    @OneToMany
-    private List<Item> itemsInGame;
-    @OneToMany
+    @OneToMany(targetEntity = UsableItem.class)
+    private List<UsableItem> itemsInGame;
+    @OneToMany(targetEntity = Block.class)
+    private List<Block> blocksInGame;
+    @OneToMany(targetEntity = Weapon.class)
+    private List<Weapon> weaponsInGame;
+    @OneToMany(targetEntity = Mob.class)
     private List<Mob> mobsInGame;
-    @OneToMany
+    @OneToMany(targetEntity = NonPlayerCharacter.class)
     private List<NonPlayerCharacter> nonPlayerCharactersInGame;
-    @OneToOne
-    private User loggedInUser;
+    @OneToOne(targetEntity = GameUser.class)
+    private GameUser loggedInGameUser;
 
 }

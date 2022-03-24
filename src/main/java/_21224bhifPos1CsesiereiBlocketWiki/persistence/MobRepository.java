@@ -18,6 +18,7 @@ public interface MobRepository extends JpaRepository<Mob,Long>,
 {
 
     Mob findById(long id);
+    Mob findByName(String name);
     List<Mob> findByDrops(List<Item> drops);
     List<Mob> findByType(MobType type);
 }

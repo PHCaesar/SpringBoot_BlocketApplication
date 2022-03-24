@@ -10,7 +10,6 @@ import java.util.List;
 
 /*
  * @Author : [Philipp.cserich@gmail.com]
- *
  * User Model Class
  */
 
@@ -19,19 +18,14 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name = "Users")
-public class User extends AbstractPersistable<Long> {
-
-    @OneToMany
+public class GameUser extends AbstractPersistable<Long> {
+    @OneToMany(targetEntity = Surname.class,fetch = FetchType.EAGER)
     private List<Surname> surnames;
 
-    private String firstname;
-
-    private String name;
-
-    private String username;
+    private String firstname,name,username;
 
     private LocalDate birthDate;
-    @ElementCollection
-    private List<Permission> permissions;
+    //@ElementCollection
+    //private List<Permission> permissions;
 
 }

@@ -27,6 +27,15 @@ public class NonPlayerCharacterRepositoryCustomImpl implements  NonPlayerCharact
         entityManager.flush();
     }
 
+    public NonPlayerCharacter findByName(String name) {
+        String sqlQueryString = "SELECT id FROM NonPlayerCharacter WHERE name = :name";
+        TypedQuery<Long> query = entityManager.createQuery(sqlQueryString, Long.class);
+        query.setParameter("name", name);
+
+        Long id = query.getSingleResult();
+        return entityManager.find(NonPlayerCharacter.class, id);
+    }
+
     @Override
     public List<NonPlayerCharacter> findByShopItemsNotNull() {
         String sqlQueryString = "SELECT id FROM NonPlayerCharacter WHERE shopItems is not NULL";

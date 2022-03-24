@@ -29,6 +29,16 @@ public class MobRepositoryCustomImpl implements MobRepositoryCustom{
     }
 
     @Override
+    public Mob findByName(String name) {
+        String sqlQueryString = "SELECT id FROM Mob WHERE name = :name";
+        TypedQuery<Long> query = entityManager.createQuery(sqlQueryString, Long.class);
+        query.setParameter("name", name);
+
+        Long id = query.getSingleResult();
+        return entityManager.find(Mob.class, id);
+    }
+
+    @Override
     public List<Mob> findByDrops(List<Item> drops) {
         String sqlQueryString = "SELECT id FROM Mob WHERE drops = :drops";
         TypedQuery<Long> query = entityManager.createQuery(sqlQueryString, Long.class);

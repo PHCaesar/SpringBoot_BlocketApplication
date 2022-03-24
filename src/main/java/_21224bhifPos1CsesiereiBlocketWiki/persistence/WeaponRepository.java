@@ -1,6 +1,5 @@
 package _21224bhifPos1CsesiereiBlocketWiki.persistence;
 
-import _21224bhifPos1CsesiereiBlocketWiki.Domain.User;
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.Weapon;
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.WeaponClass;
 import org.springframework.data.jpa.repository.JpaRepository;

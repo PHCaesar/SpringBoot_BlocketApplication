@@ -16,16 +16,12 @@ import java.util.List;
 
 @Entity
 @Data
+@Builder
 @NoArgsConstructor @AllArgsConstructor
 @Table(name = "NonPlayerCharacters")
 public class NonPlayerCharacter extends AbstractPersistable<String> {
 
     private float health;
-
-    @OneToMany
-    private List<Item> shopItems;
-
-    public List<Item> getShopItems(){return shopItems;}
-    public void setShopItems(){this.shopItems = shopItems;}
-
+    @OneToMany(targetEntity = UsableItem.class,fetch = FetchType.EAGER)
+    private List<UsableItem> shopItems;
 }

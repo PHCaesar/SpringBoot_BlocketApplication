@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 
 @Getter
 @RequiredArgsConstructor
-
 @Component
 public class BlockRepositoryCustomImpl implements BlockRepositoryCustom {
 
