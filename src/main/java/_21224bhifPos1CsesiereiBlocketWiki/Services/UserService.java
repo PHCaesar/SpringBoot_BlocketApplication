@@ -1,7 +1,8 @@
 package _21224bhifPos1CsesiereiBlocketWiki.Services;
 
+import _21224bhifPos1CsesiereiBlocketWiki.Domain.GameUser;
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.Mob;
-import _21224bhifPos1CsesiereiBlocketWiki.Domain.User;
+import _21224bhifPos1CsesiereiBlocketWiki.Domain.GameUser;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.MutateMobCommand;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.MutateUserCommand;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.exceptions.UniversalExceptionStatements;
@@ -20,7 +21,7 @@ public class UserService {
     public final UserRepository userRepository;
 
     // GET
-    public User getUserByName(MutateUserCommand user){
+    public GameUser getUserByName(MutateUserCommand user){
         checkParameterInput(user);
 
         var realUser = userRepository.findByFirstnameAndUsername(user.firstname ,user.username);
@@ -30,23 +31,23 @@ public class UserService {
     // CRUD
 
     // CREATE
-    public User insertUser(MutateUserCommand user){
+    public GameUser insertUser(MutateUserCommand user){
         checkParameterInput(user);
         if(userRepository.findByFirstnameAndUsername(user.firstname ,user.username)==null){
-            User blockInstance = createInstanceByMutateCommand(user);
-            userRepository.insert(blockInstance);
-            return blockInstance;
+            GameUser userInstance = createInstanceByMutateCommand(user);
+            userRepository.insert(userInstance);
+            return userInstance;
         } else throw new IllegalArgumentException("User "+ UniversalExceptionStatements.DUPLICATE_DATA_FOUND);
     }
 
     // UPDATE
-    public User updateUser(MutateUserCommand user){
+    public GameUser updateUser(MutateUserCommand user){
         checkParameterInput(user);
 
         if(userRepository.findByFirstnameAndUsername(user.firstname ,user.username)!=null){
-            User blockInstance = createInstanceByMutateCommand(user);
-            userRepository.insert(blockInstance);
-            return blockInstance;
+            GameUser userInstance = createInstanceByMutateCommand(user);
+            userRepository.insert(userInstance);
+            return userInstance;
         } else throw new IllegalArgumentException("User "+UniversalExceptionStatements.DATA_NOT_FOUND);
     }
 
@@ -65,13 +66,12 @@ public class UserService {
             throw new IllegalArgumentException("Firstname "+UniversalExceptionStatements.BLANK_OR_EMPTY_MSG);
     }
 
-    public User createInstanceByMutateCommand(MutateUserCommand user){
-        User userInstance = new User();
+    public GameUser createInstanceByMutateCommand(MutateUserCommand user){
+        GameUser userInstance = new GameUser();
         userInstance.setName(user.name);
         userInstance.setUsername(user.username);
         userInstance.setFirstname(user.firstname);
         userInstance.setBirthDate(user.birthDate);
-        userInstance.setPermissions(user.permissions);
         userInstance.setSurnames(user.surnames);
         return userInstance;
     }

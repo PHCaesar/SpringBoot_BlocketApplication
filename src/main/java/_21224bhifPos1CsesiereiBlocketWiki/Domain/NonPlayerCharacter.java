@@ -20,7 +20,7 @@ import java.util.List;
 @NoArgsConstructor @AllArgsConstructor
 @Table(name = "NonPlayerCharacters")
 public class NonPlayerCharacter extends AbstractPersistable<String> {
-
+    private String name;
     private float health;
     @OneToMany(targetEntity = UsableItem.class,fetch = FetchType.EAGER)
     private List<UsableItem> shopItems;
