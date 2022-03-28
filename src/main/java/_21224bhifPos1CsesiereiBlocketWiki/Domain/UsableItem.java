@@ -4,6 +4,8 @@ import lombok.*;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.function.Predicate;
 
 /*
@@ -18,6 +20,7 @@ import java.util.function.Predicate;
 @NoArgsConstructor @AllArgsConstructor
 @Table(name = "UsableItems")
 public class UsableItem extends Item {
-    public UsableItem(String name,int size){super(name,size);}
+    private LocalDateTime created_at;
     private String description;
+    private String token;
 }

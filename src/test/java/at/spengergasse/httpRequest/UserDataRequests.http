@@ -1,0 +1,12 @@
+
+GET http://localhost:7777/api/user/
+###
+POST http://localhost:7777/api/user/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "firstname": "Hans",
+  "name" : "Hinterseer",
+  "username" : "Hirni09"
+}

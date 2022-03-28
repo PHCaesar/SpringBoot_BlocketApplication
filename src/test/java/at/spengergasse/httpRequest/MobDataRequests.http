@@ -1,0 +1,10 @@
+GET http://localhost:7777/api/mob
+###
+POST http://localhost:7777/api/mob
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Zombie",
+  "type" : "AGGRESSIVE"
+}

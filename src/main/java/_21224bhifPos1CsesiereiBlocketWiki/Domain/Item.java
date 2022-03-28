@@ -1,6 +1,8 @@
 package _21224bhifPos1CsesiereiBlocketWiki.Domain;
 
 import lombok.AllArgsConstructor;
+
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.AbstractPersistable;

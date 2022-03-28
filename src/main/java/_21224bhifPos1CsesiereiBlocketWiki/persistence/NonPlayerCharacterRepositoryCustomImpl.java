@@ -1,14 +1,14 @@
 package _21224bhifPos1CsesiereiBlocketWiki.persistence;
 
-import _21224bhifPos1CsesiereiBlocketWiki.Domain.Mob;
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.NonPlayerCharacter;
+import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.MutateCommands.MutateNonPlayerCharacterCommand;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
+import javax.persistence.Query;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,18 +28,15 @@ public class NonPlayerCharacterRepositoryCustomImpl implements  NonPlayerCharact
     }
 
     public NonPlayerCharacter findByName(String name) {
-        String sqlQueryString = "SELECT id FROM NonPlayerCharacter WHERE name = :name";
-        TypedQuery<Long> query = entityManager.createQuery(sqlQueryString, Long.class);
+        Query query = entityManager.createQuery("SELECT id FROM NonPlayerCharacter WHERE name = :name");
         query.setParameter("name", name);
 
-        Long id = query.getSingleResult();
-        return entityManager.find(NonPlayerCharacter.class, id);
+        return entityManager.find(NonPlayerCharacter.class, query.getSingleResult());
     }
 
     @Override
     public List<NonPlayerCharacter> findByShopItemsNotNull() {
-        String sqlQueryString = "SELECT id FROM NonPlayerCharacter WHERE shopItems is not NULL";
-        TypedQuery<Long> query = entityManager.createQuery(sqlQueryString, Long.class);
+        Query query = entityManager.createQuery("SELECT id FROM NonPlayerCharacter WHERE shopItems.size = 0");
 
         List<Long> ids = query.getResultList();
         return ids.stream().map(x-> entityManager.find(NonPlayerCharacter.class,x)).collect(Collectors.toList());
@@ -47,11 +44,19 @@ public class NonPlayerCharacterRepositoryCustomImpl implements  NonPlayerCharact
 
     @Override
     public List<NonPlayerCharacter> findByHealth(float health) {
-        String sqlQueryString = "SELECT id FROM NonPlayerCharacter WHERE health = :health";
-        TypedQuery<Long> query = entityManager.createQuery(sqlQueryString, Long.class);
+        Query query = entityManager.createQuery("SELECT id FROM NonPlayerCharacter WHERE health = :health");
         query.setParameter("health", health);
 
         List<Long> ids = query.getResultList();
         return ids.stream().map(x-> entityManager.find(NonPlayerCharacter.class,x)).collect(Collectors.toList());
+    }
+
+    @Override
+    public NonPlayerCharacter findByMutateCommand(MutateNonPlayerCharacterCommand mutateNonPlayerCharacterCommand) {
+        Query query = entityManager.createQuery("SELECT id FROM NonPlayerCharacter WHERE name = :name and health = :health");
+        query.setParameter("name", mutateNonPlayerCharacterCommand.getName());
+        query.setParameter("health", mutateNonPlayerCharacterCommand.getHealth());
+
+        return entityManager.find(NonPlayerCharacter.class, query.getSingleResult());
     }
 }

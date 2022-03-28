@@ -1,0 +1,26 @@
+POST http://localhost:7777/api/block
+Content-Type: application/json
+Accept: application/json
+
+{
+  "blockDurability": "1",
+  "blockname" : "Dirtblock",
+  "name" : "Dirt",
+  "size" : 1
+  }
+###
+POST http://localhost:7777/api/block
+Content-Type: application/json
+Accept: application/json
+
+{
+  "blockDurability": "5",
+  "blockname" : "Stoneblock",
+  "name" : "Stone",
+  "size" : 3
+}
+###
+
+GET http://localhost:7777/api/block/
+###
+GET http://localhost:7777/api/block/1

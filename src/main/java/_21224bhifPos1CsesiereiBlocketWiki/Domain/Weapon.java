@@ -4,6 +4,8 @@ import lombok.*;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.function.Predicate;
 
 /*
@@ -19,9 +21,10 @@ import java.util.function.Predicate;
 
 public class Weapon extends Item
 {
-    public Weapon(String name,int size) {super(name,size);}
+    private LocalDateTime created_at;
     private String description;
     private int damage;
+    private String token;
 
     @Embedded
     private WeaponClass classification;

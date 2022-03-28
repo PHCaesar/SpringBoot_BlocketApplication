@@ -4,6 +4,8 @@ import lombok.*;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.function.Predicate;
 
 /*
@@ -15,10 +17,15 @@ import java.util.function.Predicate;
 
 @Entity
 @Table(name = "Blocks")
+@Builder
 @NoArgsConstructor @AllArgsConstructor
 @Data
 public class Block extends Item
 {
-    public Block(String name,int size) {super(name,size);}
+    private String name;
+    private int size;
+    private LocalDateTime created_at;
     private int blockDurability;
+    private String blockname;
+    private String token;
 }

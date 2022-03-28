@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.time.LocalDate;
 import java.util.List;
@@ -30,40 +31,36 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom{
 
     @Override
     public List<GameUser> findByBirthDateAfter(LocalDate birthDate) {
-        String sqlQueryString = "SELECT id FROM User WHERE birthDate < :birthDate";
-        TypedQuery<Long> query = entityManager.createQuery(sqlQueryString, Long.class);
-        query.setParameter("birthDate", birthDate);
+        Query queryString = entityManager.createQuery("SELECT id FROM GameUser WHERE birthDate < :birthDate");
+        queryString.setParameter("birthDate", birthDate);
 
-        List<Long> ids = query.getResultList();
+        List<Long> ids = queryString.getResultList();
         return ids.stream().map(x-> entityManager.find(GameUser.class,x)).collect(Collectors.toList());
     }
 
     @Override
     public List<GameUser> findByBirthDateBefore(LocalDate birthDate) {
-        String sqlQueryString = "SELECT id FROM User WHERE birthDate > :birthDate";
-        TypedQuery<Long> query = entityManager.createQuery(sqlQueryString, Long.class);
-        query.setParameter("birthDate", birthDate);
+        Query sqlQueryString = entityManager.createQuery("SELECT id FROM GameUser WHERE birthDate > :birthDate");
+        sqlQueryString.setParameter("birthDate", birthDate);
 
-        List<Long> ids = query.getResultList();
+        List<Long> ids = sqlQueryString.getResultList();
         return ids.stream().map(x-> entityManager.find(GameUser.class,x)).collect(Collectors.toList());
     }
 
     @Override
     public GameUser findByFirstnameAndUsername(String firstname, String username) {
-        String sqlQueryString = "SELECT id FROM User WHERE firstname = :firstname AND username = :username";
-        TypedQuery<Long> query = entityManager.createQuery(sqlQueryString, Long.class);
+        Query query = entityManager.createQuery("SELECT id FROM GameUser WHERE firstname = :firstname AND username = :username");
         query.setParameter("firstname", firstname).setParameter("username", username);
-        Long id = query.getSingleResult();
-
-        return entityManager.find(GameUser.class, id);
+        try{
+            return entityManager.find(GameUser.class,  query.getSingleResult());
+        } catch (Exception e) {return null;}
     }
 
     @Override
     public GameUser findByFirstnameAndSurnames(String firstname, List<Surname> surnames) {
-        String sqlQueryString = "SELECT id FROM User WHERE firstname = :firstname AND surnames = :surnames";
-        TypedQuery<Long> query = entityManager.createQuery(sqlQueryString, Long.class);
-        query.setParameter("firstname", firstname).setParameter("surnames", surnames);
-        Long id = query.getSingleResult();
+        Query sqlQueryString = entityManager.createQuery("SELECT id FROM GameUser WHERE firstname = :firstname AND surnames = :surnames");
+        sqlQueryString.setParameter("firstname", firstname).setParameter("surnames", surnames);
+        Long id = (Long) sqlQueryString.getSingleResult();
 
         return entityManager.find(GameUser.class, id);
     }

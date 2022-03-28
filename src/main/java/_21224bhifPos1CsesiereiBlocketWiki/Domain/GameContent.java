@@ -4,6 +4,8 @@ import lombok.*;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /*
@@ -19,6 +21,7 @@ import java.util.List;
 @Table(name = "GameContents")
 public class GameContent extends AbstractPersistable<Long> {
 
+    private LocalDateTime created_at;
     @OneToMany(targetEntity = UsableItem.class)
     private List<UsableItem> itemsInGame;
     @OneToMany(targetEntity = Block.class)
@@ -31,5 +34,6 @@ public class GameContent extends AbstractPersistable<Long> {
     private List<NonPlayerCharacter> nonPlayerCharactersInGame;
     @OneToOne(targetEntity = GameUser.class)
     private GameUser loggedInGameUser;
+    private String token;
 
 }

@@ -4,6 +4,8 @@ import lombok.*;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /*
  * @Author : [Philipp.cserich@gmail.com]
@@ -15,7 +17,8 @@ import javax.persistence.*;
 @NoArgsConstructor @AllArgsConstructor
 @Builder
 public class Surname extends AbstractPersistable<Long> {
+    private LocalDateTime created_at;
     private String name;
-
+    private String token;
 }
 
