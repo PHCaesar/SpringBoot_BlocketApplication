@@ -3,7 +3,7 @@ package at.spengergasse.tests;
 import _21224bhifPos1CsesiereiBlocketWiki.Application;
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.NonPlayerCharacter;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.MutateCommands.MutateNonPlayerCharacterCommand;
-import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.MutateCommands.TemporalValueFactory;
+import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.TemporalValueFactory;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.NonPlayerCharacterService;
 import _21224bhifPos1CsesiereiBlocketWiki.persistence.NonPlayerCharacterRepository;
 import org.junit.jupiter.api.BeforeEach;

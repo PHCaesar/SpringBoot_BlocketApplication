@@ -4,8 +4,7 @@ import _21224bhifPos1CsesiereiBlocketWiki.Application;
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.Block;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.BlockService;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.Dtos.BlockDto;
-import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.MutateCommands.MutateBlockCommand;
-import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.MutateCommands.TemporalValueFactory;
+import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.TemporalValueFactory;
 import _21224bhifPos1CsesiereiBlocketWiki.persistence.BlockRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -46,9 +45,9 @@ public class BlockServiceTest {
         //when
         Block addedReference = blockService.createInstanceByDTO(block);
         //assert
-        assertEquals(block.getBlockDurability(), addedReference.getBlockDurability());
-        assertEquals(block.getSize(), addedReference.getSize());
-        assertEquals(block.getName(), addedReference.getName());
+        assertEquals(block.blockDurability(), addedReference.getBlockDurability());
+        assertEquals(block.size(), addedReference.getSize());
+        assertEquals(block.name(), addedReference.getName());
     }
 
     @Test

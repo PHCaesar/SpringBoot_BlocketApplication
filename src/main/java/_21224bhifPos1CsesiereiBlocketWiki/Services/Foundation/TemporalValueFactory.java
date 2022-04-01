@@ -1,4 +1,4 @@
-package _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.MutateCommands;
+package _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;

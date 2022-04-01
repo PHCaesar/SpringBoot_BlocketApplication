@@ -13,8 +13,9 @@ import java.util.stream.Collectors;
 
 @Component
 public class TokenService {
+
     private Hashids hashids;
-    @Value("MySecretSalt")
+    @Value("HashingAlgorythm")
     private String salt;
     private Collector<CharSequence , ? , String> joining = Collectors.joining("|","[","]");
 
@@ -24,10 +25,11 @@ public class TokenService {
     }
 
     public String createTokenFor(LocalDateTime datetime , String... strings){
-        return  createTokenFor(datetime , Arrays.stream(strings)
+        return createTokenFor(datetime , Arrays.stream(strings)
                 .filter(s -> s != null)
                 .collect(joining));
     }
+
     public String createTokenFor(LocalDateTime datetime , String string){
         Long tokensource = datetime.toEpochSecond(ZoneOffset.UTC)+string.hashCode();
         return hashids.encode(tokensource);

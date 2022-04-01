@@ -1,16 +1,13 @@
 package _21224bhifPos1CsesiereiBlocketWiki.presentation.controller;
 
-import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.MutateCommands.TemporalValueFactory;
+import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.TemporalValueFactory;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.BlockService;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.Dtos.BlockDto;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.MutateCommands.MutateBlockCommand;
-import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.MutateCommands.TemporalValueFactory;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.*;
@@ -41,25 +38,12 @@ public class BlockController {
 
     @GetMapping({"",PATH_VAR_DURABILITY})
     public HttpEntity<List<Block>> getBlocksByDurability(@PathVariable int durability){ //Param muss String sein
-        List<Block> blocks = blockService.getBlocksByDurability(
-        BlockDto.builder().blockDurability(durability).name("").blockname("").build()); //Should be be using DTOS while returning MutateCommands to the Service
+        List<Block> blocks = blockService.getBlocksByDurability(durability);//Should be be using DTOS while returning MutateCommands to the Service
         return ResponseEntity.ok(blocks);
     }
 
     @PostMapping({"",UniversalPathVariables.PATH_INDEX})
-    public HttpEntity<Block> postBlocks(@RequestBody MutateBlockCommand mutateBlockCommand){
-        return ResponseEntity.ok(blockService.insertBlock(
-                BlockDto.builder().blockDurability(mutateBlockCommand.getBlockDurability())
-                        .blockname(mutateBlockCommand.getBlockName())
-                        .name(mutateBlockCommand.getName())
-                        .size(mutateBlockCommand.getSize())
-                        .blockDurability(mutateBlockCommand.getBlockDurability())
-                        .created_at(temporalValueFactory.create_timestamp())
-                        .token(tokenService.createTokenFor(temporalValueFactory.create_timestamp()
-                                ,mutateBlockCommand.getName()
-                                ,""+mutateBlockCommand.getSize()
-                                ,mutateBlockCommand.getBlockName()
-                        ))
-                        .build()));
+    public HttpEntity<Block> postBlocks(@RequestBody BlockDto blockDto){
+        return ResponseEntity.ok(blockService.insertBlock(blockDto));
     }
 }

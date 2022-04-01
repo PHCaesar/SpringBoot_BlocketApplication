@@ -44,7 +44,7 @@ public class BlockRepositoryCustomImpl implements BlockRepositoryCustom {
     @Override
     public Block findByDTO(BlockDto mutateBlockCommand){
         Query sqlQuery = entityManager.createQuery("SELECT id FROM Block WHERE blockDurability = :blockdurability AND blockname = :blockname");
-        sqlQuery.setParameter("blockdurability", mutateBlockCommand.getBlockDurability()).setParameter("blockname", mutateBlockCommand.getBlockname());
+        sqlQuery.setParameter("blockdurability", mutateBlockCommand.blockDurability()).setParameter("blockname", mutateBlockCommand.blockname());
         try {
             return entityManager.find(Block.class, sqlQuery.getSingleResult());
         }catch (Exception e){return null;}
