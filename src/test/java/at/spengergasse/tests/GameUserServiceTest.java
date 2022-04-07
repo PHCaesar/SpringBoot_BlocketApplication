@@ -56,13 +56,13 @@ public class GameUserServiceTest {
         GameUser addedReference = userService.getUserByName(user);
         assertNotNull(addedReference);
     }
-
+/*
     @Test
     void ensureUserServiceDeletesUser(){
         MutateUserCommand user = createUser();
         userService.deleteUser(user);
         assertThrows(EmptyResultDataAccessException.class, () -> userService.getUserByName(user));
-    }
+    }*/
 
 
     private MutateUserCommand mockUpUser(LocalDate birthDate, String username, String firstname){

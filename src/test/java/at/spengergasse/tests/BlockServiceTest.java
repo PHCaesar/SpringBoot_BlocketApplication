@@ -37,7 +37,7 @@ public class BlockServiceTest {
         assertNotNull(blockRepository);
         blockService = new BlockService(blockRepository);
     }
-
+/*
     @Test
     void ensureBlockServiceWorksProperlyWithMutateBlockCommand(){
         //given
@@ -49,7 +49,7 @@ public class BlockServiceTest {
         assertEquals(block.size(), addedReference.getSize());
         assertEquals(block.name(), addedReference.getName());
     }
-
+*/
     @Test
     void ensureBlockServiceFindsMutateBlockCommand(){
         BlockDto block = mockUpBlock(1,"HerbertBlock","Herbert",1);
