@@ -52,8 +52,8 @@ public class MobRepositoryCustomImpl implements MobRepositoryCustom{
     @Override
     public Mob findByDTO(MobDto mutateMobCommand) {
         Query sqlQuery = entityManager.createQuery("SELECT id FROM Mob WHERE name = :name AND type = :type");
-        sqlQuery.setParameter("type", mutateMobCommand.getType());
-        sqlQuery.setParameter("name", mutateMobCommand.getName());
+        sqlQuery.setParameter("type", mutateMobCommand.type());
+        sqlQuery.setParameter("name", mutateMobCommand.name());
 
         return entityManager.find(Mob.class, sqlQuery.getSingleResult());
     }

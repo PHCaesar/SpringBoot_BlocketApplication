@@ -25,7 +25,7 @@ public class MobService {
     public Mob getMobByName(MobDto mob){
         checkParameterInput(mob);
 
-        var realMob = mobRepository.findByName(mob.getName());
+        var realMob = mobRepository.findByName(mob.name());
         log.info("Found {} realMob", realMob);
         return realMob;
     }
@@ -77,11 +77,11 @@ public class MobService {
     }
 
     public void checkParameterInput(MobDto mob){
-        if(mob.getName().isEmpty()) {
+        if(mob.name().isEmpty()) {
             log.warn("checkParameterInput Mob.Name" + UniversalExceptionStatements.BLANK_OR_EMPTY_MSG);
             throw new IllegalArgumentException("Name " + UniversalExceptionStatements.BLANK_OR_EMPTY_MSG);
         }
-        if(mob.getType().equals(null)) {
+        if(mob.type().equals(null)) {
             log.warn("checkParameterInput Mob.Type" + UniversalExceptionStatements.BLANK_OR_EMPTY_MSG);
             throw new IllegalArgumentException("Type " + UniversalExceptionStatements.BLANK_OR_EMPTY_MSG);
         }
@@ -89,9 +89,9 @@ public class MobService {
 
     public Mob createInstanceByDTO(MobDto mob){
         Mob mobInstance = new Mob();
-        mobInstance.setName(mob.getName());
-        mobInstance.setType(mob.getType());
-        mobInstance.setToken(mob.getToken());
+        mobInstance.setName(mob.name());
+        mobInstance.setType(mob.type());
+        mobInstance.setToken(mob.token());
         //mobInstance.setDrops(mob.getDrops());
         mobRepository.insert(mobInstance);
         log.info("createInstanceByMutateCommand {} mobInstance", mobInstance);

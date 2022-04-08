@@ -44,8 +44,8 @@ public class MobServiceTest {
     @Test
     void ensureUserServiceWorksProperlyWithMutateBlockCommand(){
         Mob addedReference = mobService.createInstanceByDTO(basicDataMob);
-        assertEquals(basicDataMob.getType(), addedReference.getType());
-        assertEquals(basicDataMob.getName(), addedReference.getName());
+        assertEquals(basicDataMob.type(), addedReference.getType());
+        assertEquals(basicDataMob.name(), addedReference.getName());
     }
 
     @Test

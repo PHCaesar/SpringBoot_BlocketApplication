@@ -1,19 +1,15 @@
 package _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.Dtos;
 
+import _21224bhifPos1CsesiereiBlocketWiki.Domain.UsableItem;
 import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Data
 @Builder
-public class UsableItemDto implements Serializable {
-
-    private final int blockDurability;
-    private final String name;
-    private final int size;
-    private final LocalDateTime created_at;
-    private final String description;
-    private final String token;
+public record UsableItemDto(String name , int size , LocalDateTime created_at , String description , String token) {
+        public UsableItemDto(UsableItem usableItem){
+            this(usableItem.getName(), usableItem.getSize(), usableItem.getCreated_at(), usableItem.getDescription(), usableItem.getToken());
+        }
 }

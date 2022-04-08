@@ -1,5 +1,7 @@
 package _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.Dtos;
 
+import _21224bhifPos1CsesiereiBlocketWiki.Domain.NonPlayerCharacter;
+import _21224bhifPos1CsesiereiBlocketWiki.Domain.UsableItem;
 import lombok.Builder;
 import lombok.Data;
 
@@ -7,11 +9,9 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Data
 @Builder
-public class NonPlayerCharacterDto implements Serializable {
-    private final Long id;
-    private final float health;
-    private final List<UsableItemDto> shopItems;
-    private final LocalDateTime created_at;
+public record NonPlayerCharacterDto (Long id, float health , List<UsableItem> shopitems , LocalDateTime created_at){
+    public NonPlayerCharacterDto(NonPlayerCharacter nonPlayerCharacter){
+        this(nonPlayerCharacter.getId(),nonPlayerCharacter.getHealth(),nonPlayerCharacter.getShopItems(),nonPlayerCharacter.getCreated_at());
+    }
 }
