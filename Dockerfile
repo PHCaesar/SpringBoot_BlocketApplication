@@ -1,5 +1,5 @@
 # Dockerfile
-FROM openjdk:11-jdk-slim
+FROM openjdk:18-jdk-slim
 VOLUME /tmp
 ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} app.jar
