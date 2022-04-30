@@ -2,6 +2,7 @@ package _21224bhifPos1CsesiereiBlocketWiki.presentation.controller;
 
 
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.GameUser;
+import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.Dtos.GameUserDto;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.MutateCommands.MutateUserCommand;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.TemporalValueFactory;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.TokenService;
@@ -12,6 +13,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -38,24 +41,24 @@ public class GameUserController {
 
     @GetMapping({"",PATH_VAR_DURABILITY})
     public HttpEntity<GameUser> getUsersByNames(@PathVariable String firstname,String name){ //Param muss String sein
-        GameUser users = userService.getUserByName(MutateUserCommand.builder().firstname(firstname).name(name).build());
+        GameUser users = userService.getUserByName(new GameUserDto(null,null,firstname,name,"", null,""));
         return ResponseEntity.ok(users);
     }
 
     @PostMapping({"",UniversalPathVariables.PATH_INDEX})
     public HttpEntity<GameUser> postBlocks(@RequestBody MutateUserCommand mutateUserCommand){
         return ResponseEntity.ok(userService.insertUser(
-                MutateUserCommand.builder()
+                new GameUserDto(GameUser.builder()
                         .name(mutateUserCommand.getName())
                         .firstname(mutateUserCommand.getFirstname())
                         .birthDate(mutateUserCommand.getBirthDate())
                         .username(mutateUserCommand.getUsername())
-                        .created_at(temporalValueFactory.create_timestamp())
-                        .token(tokenService.createTokenFor(temporalValueFactory.create_timestamp()
+                        .created_at(temporalValueFactory.create_datetimestamp())
+                        .token(tokenService.createTokenFor(temporalValueFactory.create_datetimestamp()
                                 ,mutateUserCommand.getFirstname()
                                 ,mutateUserCommand.getName()
                                 ,mutateUserCommand.getUsername()
                         ))
-                        .build()));
+                        .build())));
     }
 }

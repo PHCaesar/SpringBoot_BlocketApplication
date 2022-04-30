@@ -1,12 +1,13 @@
 package _21224bhifPos1CsesiereiBlocketWiki.Services;
 
-import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.MutateCommands.MutateSurnameCommand;
+import _21224bhifPos1CsesiereiBlocketWiki.Domain.Surname;
+import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.Dtos.SurnameDto;
+import _21224bhifPos1CsesiereiBlocketWiki.Services.Interfaces.ISurnameService;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.exceptions.UniversalExceptionStatements;
 import _21224bhifPos1CsesiereiBlocketWiki.persistence.SurnameRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
-import _21224bhifPos1CsesiereiBlocketWiki.Domain.*;
 
 import javax.transaction.Transactional;
 
@@ -14,16 +15,13 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 @Service
 @Transactional
-public class SurnameService {
-    //TODO : Use DTOs
+public class SurnameService implements ISurnameService {
 
     public final SurnameRepository surnameRepository;
 
     //GET
-    public Surname getByName(MutateSurnameCommand srn) {
-        checkParameterInput(srn);
-
-        var SurNm = surnameRepository.findByName(srn.getName());
+    public Surname getByName(String name) {
+        var SurNm = surnameRepository.findByName(name);
         log.info("Found {} SurNm", SurNm);
         return SurNm;
     }
@@ -31,10 +29,10 @@ public class SurnameService {
     //CRUD
 
     //CREATE
-    public Surname insertSurname(MutateSurnameCommand srn){
+    public Surname insertSurname(SurnameDto srn){
         checkParameterInput(srn);
-        if(surnameRepository.findByName(srn.getName())== null){
-            Surname srnInstance = createInstanceByMutateCommand(srn);
+        if(surnameRepository.findByName(srn.name())== null){
+            Surname srnInstance = createInstanceByDTO(srn);
             surnameRepository.insert(srnInstance);
             log.info("insertSurname {} srnInstance", srnInstance);
             return srnInstance;
@@ -45,10 +43,10 @@ public class SurnameService {
     }
 
     //Update
-    public Surname updateSurname(MutateSurnameCommand srn){
+    public Surname updateSurname(SurnameDto srn){
         checkParameterInput(srn);
-        if (surnameRepository.findByName(srn.getName()) != null) {
-            Surname srnInstance = createInstanceByMutateCommand(srn);
+        if (surnameRepository.findByName(srn.name()) != null) {
+            Surname srnInstance = createInstanceByDTO(srn);
             surnameRepository.insert(srnInstance);
             log.info("updateSurname {} srnInstance", srnInstance);
             return srnInstance;
@@ -59,11 +57,11 @@ public class SurnameService {
     }
 
     //DELETE
-    public void deleteSurname(MutateSurnameCommand srn){
+    public void deleteSurname(SurnameDto srn){
         checkParameterInput(srn);
-        if(surnameRepository.findByName(srn.getName())!=null) {
+        if(surnameRepository.findByName(srn.name())!=null) {
             log.info("deleteSurname {} srn", srn);
-            surnameRepository.delete(surnameRepository.findByName((srn.getName())));
+            surnameRepository.delete(surnameRepository.findByName((srn.name())));
         }
         else {
             log.warn("deleteSurname SRN " + UniversalExceptionStatements.DUPLICATE_DATA_FOUND);
@@ -71,17 +69,21 @@ public class SurnameService {
         }
     }
 
+    public void deleteAll() {
+        surnameRepository.deleteAll();
+    }
 
-    public void checkParameterInput(MutateSurnameCommand srn) {
-        if (srn.getName().isEmpty()){
+
+    public void checkParameterInput(SurnameDto srn) {
+        if (srn.name().isEmpty()){
             log.warn("checkParameterInput SRN.Name" + UniversalExceptionStatements.BLANK_OR_EMPTY_MSG);
             throw new IllegalArgumentException("Name " + UniversalExceptionStatements.BLANK_OR_EMPTY_MSG);
         }
     }
 
-    public Surname createInstanceByMutateCommand(MutateSurnameCommand srn){
+    public Surname createInstanceByDTO(SurnameDto srn){
         Surname srnInstance = new Surname();
-        srnInstance.setName(srn.getName());
+        srnInstance.setName(srn.name());
         surnameRepository.insert(srnInstance);
         log.info("createInstanceByMutateCommand {} srnInstance", srnInstance);
         return srnInstance;

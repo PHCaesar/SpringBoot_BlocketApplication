@@ -4,6 +4,7 @@ import _21224bhifPos1CsesiereiBlocketWiki.Domain.Block;
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.Mob;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.Dtos.MobDto;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.MutateCommands.MutateMobCommand;
+import _21224bhifPos1CsesiereiBlocketWiki.Services.Interfaces.IMobService;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.exceptions.UniversalExceptionStatements;
 import _21224bhifPos1CsesiereiBlocketWiki.persistence.MobRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,15 +18,13 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 @Transactional
-public class MobService {
+public class MobService implements IMobService {
 
     public final MobRepository mobRepository;
 
     // GET
-    public Mob getMobByName(MobDto mob){
-        checkParameterInput(mob);
-
-        var realMob = mobRepository.findByName(mob.name());
+    public Mob getMobByName(String mobname){
+        var realMob = mobRepository.findByName(mobname);
         log.info("Found {} realMob", realMob);
         return realMob;
     }
@@ -74,6 +73,10 @@ public class MobService {
             log.warn("deleteMob Mob " + UniversalExceptionStatements.DUPLICATE_DATA_FOUND);
             throw new IllegalArgumentException("Mob "+UniversalExceptionStatements.DATA_NOT_FOUND);
         }
+    }
+
+    public void deleteAll() {
+        mobRepository.deleteAll();
     }
 
     public void checkParameterInput(MobDto mob){

@@ -28,6 +28,9 @@ public class GameUser extends AbstractPersistable<Long> {
     private String firstname,name,username;
     private LocalDate birthDate;
     private String token;
+
+
+
     //@ElementCollection
     //private List<Permission> permissions;
 

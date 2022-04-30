@@ -1,4 +1,4 @@
-package at.spengergasse.tests;
+package at.spengergasse.tests.Service;
 
 import _21224bhifPos1CsesiereiBlocketWiki.Application;
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.Block;
@@ -6,10 +6,10 @@ import _21224bhifPos1CsesiereiBlocketWiki.Services.BlockService;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.Dtos.BlockDto;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.TemporalValueFactory;
 import _21224bhifPos1CsesiereiBlocketWiki.persistence.BlockRepository;
+import at.spengergasse.tests.MockUp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -37,11 +37,11 @@ public class BlockServiceTest {
         assertNotNull(blockRepository);
         blockService = new BlockService(blockRepository);
     }
-/*
+
     @Test
-    void ensureBlockServiceWorksProperlyWithMutateBlockCommand(){
+    void ensureBlockServiceWorksProperlyWithDTO(){
         //given
-        BlockDto block = Mockito.mock(BlockDto.class);
+        BlockDto block = MockUp.mockUpBlockDTO(1,"HerbertBlock","Herbert",1,temporalValueFactory.create_datetimestamp());
         //when
         Block addedReference = blockService.createInstanceByDTO(block);
         //assert
@@ -49,10 +49,10 @@ public class BlockServiceTest {
         assertEquals(block.size(), addedReference.getSize());
         assertEquals(block.name(), addedReference.getName());
     }
-*/
+
     @Test
     void ensureBlockServiceFindsMutateBlockCommand(){
-        BlockDto block = mockUpBlock(1,"HerbertBlock","Herbert",1);
+        BlockDto block = MockUp.mockUpBlockDTO(1,"HerbertBlock","Herbert",1,temporalValueFactory.create_datetimestamp());
         blockService.createInstanceByDTO(block);
         List<Block> addedReference = blockService.getBlock(block);
         assertNotNull(addedReference);
@@ -61,21 +61,11 @@ public class BlockServiceTest {
 
     @Test
     void ensureBlockServiceDeletesBlock(){
-        BlockDto block = mockUpBlock(1,"HerbertBlock","Herbert",1);
+        BlockDto block = MockUp.mockUpBlockDTO(1,"HerbertBlock","Herbert",1,temporalValueFactory.create_datetimestamp());
         blockService.createInstanceByDTO(block);
         blockService.deleteBlock(block);
         List<Block> addedReference = blockService.getBlock(block);
         assertEquals(0,addedReference.size()); //Assert that the list iis empty
     }
 
-
-    private BlockDto mockUpBlock(int durability,String blockname,String name,int size){
-        return BlockDto.builder()
-                .blockDurability(durability)
-                .blockname(blockname)
-                .name(name)
-                .size(size)
-                .created_at(temporalValueFactory.create_timestamp())
-                .build();
-    }
 }

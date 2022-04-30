@@ -1,7 +1,8 @@
 package _21224bhifPos1CsesiereiBlocketWiki.Services;
 
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.NonPlayerCharacter;
-import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.MutateCommands.MutateNonPlayerCharacterCommand;
+import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.Dtos.NonPlayerCharacterDto;
+import _21224bhifPos1CsesiereiBlocketWiki.Services.Interfaces.INonPlayerCharacterService;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.exceptions.UniversalExceptionStatements;
 import _21224bhifPos1CsesiereiBlocketWiki.persistence.NonPlayerCharacterRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,15 +15,13 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 @Service
 @Transactional
-public class NonPlayerCharacterService {
-    //TODO : Use DTOs
+public class NonPlayerCharacterService implements INonPlayerCharacterService {
 
     public final NonPlayerCharacterRepository nonPlayerCharacterRepository;
 
     // GET
-    public NonPlayerCharacter getNonPlayerCharacterByName(MutateNonPlayerCharacterCommand npc){
-        checkParameterInput(npc);
-        var realNPC = nonPlayerCharacterRepository.findByName(npc.getName());
+    public NonPlayerCharacter getNonPlayerCharacterByName(String name){
+        var realNPC = nonPlayerCharacterRepository.findByName(name);
         log.info("Found {} realNPC", realNPC);
         return realNPC;
     }
@@ -30,10 +29,10 @@ public class NonPlayerCharacterService {
     // CRUD
 
     // CREATE
-    public NonPlayerCharacter insertNPC(MutateNonPlayerCharacterCommand npc){
+    public NonPlayerCharacter insertNPC(NonPlayerCharacterDto npc){
         checkParameterInput(npc);
-        if(nonPlayerCharacterRepository.findByName(npc.getName())==null){
-            NonPlayerCharacter npcInstance = createInstanceByMutateCommand(npc);
+        if(nonPlayerCharacterRepository.findByName(npc.name())==null){
+            NonPlayerCharacter npcInstance = createInstanceByDTO(npc);
             nonPlayerCharacterRepository.insert(npcInstance);
             log.info("insertNPC {} npcInstance", npcInstance);
             return npcInstance;
@@ -44,11 +43,11 @@ public class NonPlayerCharacterService {
     }
 
     // UPDATE
-    public NonPlayerCharacter updateNPC(MutateNonPlayerCharacterCommand npc){
+    public NonPlayerCharacter updateNPC(NonPlayerCharacterDto npc){
         checkParameterInput(npc);
 
-        if(nonPlayerCharacterRepository.findByName(npc.getName())!=null){
-            NonPlayerCharacter npcInstance = createInstanceByMutateCommand(npc);
+        if(nonPlayerCharacterRepository.findByName(npc.name())!=null){
+            NonPlayerCharacter npcInstance = createInstanceByDTO(npc);
             nonPlayerCharacterRepository.insert(npcInstance);
             log.info("updateNPC {} npcInstance", npcInstance);
             return npcInstance;
@@ -59,11 +58,11 @@ public class NonPlayerCharacterService {
     }
 
     // DELETE
-    public void deleteNonPlayerCharacter(MutateNonPlayerCharacterCommand npc) {
+    public void deleteNonPlayerCharacter(NonPlayerCharacterDto npc) {
         checkParameterInput(npc);
-        if(nonPlayerCharacterRepository.findByName(npc.getName())!=null) {
+        if(nonPlayerCharacterRepository.findByName(npc.name())!=null) {
             log.info("deleteNonPlayerCharacter {} npc", npc);
-            nonPlayerCharacterRepository.delete(nonPlayerCharacterRepository.findByName(npc.getName()));
+            nonPlayerCharacterRepository.delete(nonPlayerCharacterRepository.findByName(npc.name()));
         }
         else {
             log.warn("deleteNonPlayerCharacter NPC " + UniversalExceptionStatements.DUPLICATE_DATA_FOUND);
@@ -71,23 +70,28 @@ public class NonPlayerCharacterService {
         }
     }
 
-    public void checkParameterInput(MutateNonPlayerCharacterCommand npc){
-        if(npc.getName().isEmpty()) {
+    @Override
+    public void deleteAll() {
+        nonPlayerCharacterRepository.deleteAll();
+    }
+
+    public void checkParameterInput(NonPlayerCharacterDto npc){
+        if(npc.name().isEmpty()) {
             log.warn("checkParameterInput NPC.Name" + UniversalExceptionStatements.BLANK_OR_EMPTY_MSG);
             throw new IllegalArgumentException("Name " + UniversalExceptionStatements.BLANK_OR_EMPTY_MSG);
         }
-        if(npc.getHealth() == 0) {
+        if(npc.health() == 0) {
             log.warn("checkParameterInput NPC.Health" + UniversalExceptionStatements.BLANK_OR_EMPTY_MSG);
             throw new IllegalArgumentException("Health " + UniversalExceptionStatements.BLANK_OR_EMPTY_MSG);
         }
     }
 
-    public NonPlayerCharacter createInstanceByMutateCommand(MutateNonPlayerCharacterCommand npc){
+    public NonPlayerCharacter createInstanceByDTO(NonPlayerCharacterDto npc){
         NonPlayerCharacter npcInstance = NonPlayerCharacter.builder()
-                .name(npc.getName())
-                .health(npc.getHealth())
-                .token(npc.getToken())
-                .shopItems(npc.getShopItems()).build();
+                .name(npc.name())
+                .health(npc.health())
+                .token(npc.token())
+                .shopItems(npc.shopitems()).build();
         nonPlayerCharacterRepository.insert(npcInstance);
         log.info("createInstanceByMutateCommand {} npcInstance", npcInstance);
         return npcInstance;

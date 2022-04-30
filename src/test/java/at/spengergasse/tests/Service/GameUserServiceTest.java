@@ -1,9 +1,11 @@
-package at.spengergasse.tests;
+package at.spengergasse.tests.Service;
 
 import _21224bhifPos1CsesiereiBlocketWiki.Application;
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.*;
+import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.Dtos.GameUserDto;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.MutateCommands.MutateUserCommand;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.TemporalValueFactory;
+import _21224bhifPos1CsesiereiBlocketWiki.Services.TokenService;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.UserService;
 import _21224bhifPos1CsesiereiBlocketWiki.persistence.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,9 +31,11 @@ public class GameUserServiceTest {
     private UserRepository userRepository;
     @Autowired
     private TemporalValueFactory temporalValueFactory;
+    @Autowired
+    private TokenService tokenService;
     private UserService userService;
 
-    private MutateUserCommand basicDataUser;
+    private GameUserDto basicDataUser;
 
 
     @BeforeEach
@@ -44,39 +48,34 @@ public class GameUserServiceTest {
 
     @Test
     void ensureUserServiceWorksProperlyWithMutateBlockCommand(){
-        GameUser addedReference = userService.createInstanceByMutateCommand(basicDataUser);
-        assertEquals(basicDataUser.getBirthDate(), addedReference.getBirthDate());
-        assertEquals(basicDataUser.getUsername(), addedReference.getUsername());
-        assertEquals(basicDataUser.getName(), addedReference.getName());
+        GameUser addedReference = userService.createInstanceByDTO(basicDataUser);
+        assertEquals(basicDataUser.birthDate(), addedReference.getBirthDate());
+        assertEquals(basicDataUser.username(), addedReference.getUsername());
+        assertEquals(basicDataUser.name(), addedReference.getName());
     }
 
     @Test
     void ensureUserServiceFindsMutateBlockCommand(){
-        MutateUserCommand user = createUser();
+        GameUserDto user = createUser();
         GameUser addedReference = userService.getUserByName(user);
         assertNotNull(addedReference);
     }
-/*
+
     @Test
     void ensureUserServiceDeletesUser(){
-        MutateUserCommand user = createUser();
+        GameUserDto user = createUser();
         userService.deleteUser(user);
         assertThrows(EmptyResultDataAccessException.class, () -> userService.getUserByName(user));
-    }*/
-
-
-    private MutateUserCommand mockUpUser(LocalDate birthDate, String username, String firstname){
-        return MutateUserCommand.builder()
-                .username(username)
-                .birthDate(birthDate)
-                .firstname(firstname)
-                .created_at(temporalValueFactory.create_timestamp())
-                .build();
     }
 
-    private MutateUserCommand createUser(){
-        MutateUserCommand user = basicDataUser;
-        userService.createInstanceByMutateCommand(user);
+
+    private GameUserDto mockUpUser(LocalDate birthDate, String username, String firstname){
+        return new GameUserDto(temporalValueFactory.create_datetimestamp(),null,firstname,"",username,birthDate, tokenService.createTokenFor(temporalValueFactory.create_datetimestamp()));
+    }
+
+    private GameUserDto createUser(){
+        GameUserDto user = basicDataUser;
+        userService.createInstanceByDTO(user);
         return user;
     }
 }
