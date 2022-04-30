@@ -2,7 +2,9 @@ package _21224bhifPos1CsesiereiBlocketWiki.Services;
 
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.Surname;
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.Weapon;
+import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.Dtos.WeaponDto;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.MutateCommands.MutateWeaponCommand;
+import _21224bhifPos1CsesiereiBlocketWiki.Services.Interfaces.IWeaponService;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.exceptions.UniversalExceptionStatements;
 import _21224bhifPos1CsesiereiBlocketWiki.persistence.WeaponRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,20 +12,18 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Objects;
 
 @Log4j2
 @RequiredArgsConstructor
 @Service
 @Transactional
-public class WeaponService {
-    //TODO : Use DTOs
+public class WeaponService implements IWeaponService {
 
     public final WeaponRepository weaponRepository;
     //GET
-    public Weapon getByName(MutateWeaponCommand wep) {
-        checkParameterInput(wep);
-
-        var realWep = weaponRepository.findByName(wep.getDescription());
+    public Weapon getByName(String name) {
+        var realWep = weaponRepository.findByName(name);
         log.info("Found {} realWep", realWep);
 
         return realWep;
@@ -32,10 +32,10 @@ public class WeaponService {
     //CRUD
 
     //CREATE
-    public Weapon insertWeapon(MutateWeaponCommand wep){
+    public Weapon insertWeapon(WeaponDto wep){
         checkParameterInput(wep);
-        if(weaponRepository.findByName(wep.getDescription())==null){
-            Weapon wepInstance = createInstanceByMutateCommand(wep);
+        if(weaponRepository.findByName(wep.name())==null){
+            Weapon wepInstance = createInstanceByDto(wep);
             weaponRepository.insert(wepInstance);
             log.info("insertWeapon {} wepInstance", wepInstance);
             return wepInstance;
@@ -46,10 +46,10 @@ public class WeaponService {
     }
 
     //Update
-    public Weapon updateWeapon(MutateWeaponCommand wep){
+    public Weapon updateWeapon(WeaponDto wep){
         checkParameterInput(wep);
-        if (weaponRepository.findByName(wep.getDescription()) != null) {
-            Weapon wepInstance = createInstanceByMutateCommand(wep);
+        if (weaponRepository.findByName(wep.name()) != null) {
+            Weapon wepInstance = createInstanceByDto(wep);
             weaponRepository.insert(wepInstance);
             log.info("updateWeapon {} wepInstance", wepInstance);
             return wepInstance;
@@ -60,11 +60,11 @@ public class WeaponService {
     }
 
     //DELETE
-    public void deleteWeapon(MutateWeaponCommand wep){
+    public void deleteWeapon(WeaponDto wep){
         checkParameterInput(wep);
-        if(weaponRepository.findByName(wep.getDescription())!=null) {
+        if(weaponRepository.findByName(wep.name())!=null) {
             log.info("deleteWeapon {} wep", wep);
-            weaponRepository.delete(weaponRepository.findByName((wep.getDescription())));
+            weaponRepository.delete(weaponRepository.findByName((wep.name())));
         }
         else {
             log.warn("deleteWeapon Weapon " + UniversalExceptionStatements.DUPLICATE_DATA_FOUND);
@@ -72,27 +72,39 @@ public class WeaponService {
         }
     }
 
+    public void deleteAll() {
+        weaponRepository.deleteAll();
+    }
 
-    public void checkParameterInput(MutateWeaponCommand wep){
-        if(wep.getDamage() == 0) {
+
+    public void checkParameterInput(WeaponDto wep){
+        Objects.requireNonNull(wep);
+        if(wep.damage() == 0) {
             log.warn("checkParameterInput Weapon.Damage" + UniversalExceptionStatements.BLANK_OR_EMPTY_MSG);
             throw new IllegalArgumentException("Damage " + UniversalExceptionStatements.BLANK_OR_EMPTY_MSG);
         }
-        if(wep.getClassification().equals(null)) {
+        if(wep.classification().equals(null)) {
             log.warn("checkParameterInput Weapon.Classification" + UniversalExceptionStatements.BLANK_OR_EMPTY_MSG);
             throw new IllegalArgumentException("Classification " + UniversalExceptionStatements.BLANK_OR_EMPTY_MSG);
         }
-        if(wep.getDescription().equals(null)) {
+        if(wep.description().equals(null)) {
             log.warn("checkParameterInput Weapon.Description" + UniversalExceptionStatements.BLANK_OR_EMPTY_MSG);
             throw new IllegalArgumentException("Description " + UniversalExceptionStatements.BLANK_OR_EMPTY_MSG);
         }
+        if(wep.name().equals(null)) {
+            log.warn("checkParameterInput Weapon.Name" + UniversalExceptionStatements.BLANK_OR_EMPTY_MSG);
+            throw new IllegalArgumentException("Name " + UniversalExceptionStatements.BLANK_OR_EMPTY_MSG);
+        }
     }
 
-    public Weapon createInstanceByMutateCommand(MutateWeaponCommand wep){
-        Weapon wepInstance = new Weapon();
-        wepInstance.setClassification(wep.getClassification());
-        wepInstance.setDamage(wep.getDamage());
-        wepInstance.setDescription(wep.getDescription());
+    public Weapon createInstanceByDto(WeaponDto wep){
+        Weapon wepInstance = Weapon.builder()
+                .created_at(wep.created_at())
+                .token(wep.token())
+                .classification(wep.classification())
+                .description(wep.description())
+                .damage(wep.damage())
+                .name(wep.name()).build();
         weaponRepository.insert(wepInstance);
         log.info("createInstanceByMutateCommand {} wepInstance", wepInstance);
         return wepInstance;

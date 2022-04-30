@@ -1,10 +1,12 @@
-package at.spengergasse.tests;
+package at.spengergasse.tests.Service;
 
 import _21224bhifPos1CsesiereiBlocketWiki.Application;
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.NonPlayerCharacter;
+import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.Dtos.NonPlayerCharacterDto;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.MutateCommands.MutateNonPlayerCharacterCommand;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.TemporalValueFactory;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.NonPlayerCharacterService;
+import _21224bhifPos1CsesiereiBlocketWiki.Services.TokenService;
 import _21224bhifPos1CsesiereiBlocketWiki.persistence.NonPlayerCharacterRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,9 +29,12 @@ public class NonPlayerCharacterServiceTest {
     private NonPlayerCharacterRepository nonPlayerCharacterRepository;
     @Autowired
     private TemporalValueFactory temporalValueFactory;
+    @Autowired
+    private TokenService tokenService;
+
     private NonPlayerCharacterService nonPlayerCharacterService;
 
-    private MutateNonPlayerCharacterCommand basicDataNonPlayerCharacter;
+    private NonPlayerCharacterDto basicDataNonPlayerCharacter;
 
 
     @BeforeEach
@@ -42,36 +47,32 @@ public class NonPlayerCharacterServiceTest {
 
     @Test
     void ensureUserServiceWorksProperlyWithMutateBlockCommand(){
-        NonPlayerCharacter addedReference = nonPlayerCharacterService.createInstanceByMutateCommand(basicDataNonPlayerCharacter);
-        assertEquals(basicDataNonPlayerCharacter.getHealth(), addedReference.getHealth());
-        assertEquals(basicDataNonPlayerCharacter.getName(), addedReference.getName());
+        NonPlayerCharacter addedReference = nonPlayerCharacterService.createInstanceByDTO(basicDataNonPlayerCharacter);
+        assertEquals(basicDataNonPlayerCharacter.health(), addedReference.getHealth());
+        assertEquals(basicDataNonPlayerCharacter.name(), addedReference.getName());
     }
 
     @Test
     void ensureUserServiceFindsMutateBlockCommand(){
-        MutateNonPlayerCharacterCommand mob = createNonPlayerCharacter();
-        NonPlayerCharacter addedReference = nonPlayerCharacterService.getNonPlayerCharacterByName(mob);
+        NonPlayerCharacterDto mob = createNonPlayerCharacter();
+        NonPlayerCharacter addedReference = nonPlayerCharacterService.getNonPlayerCharacterByName(mob.name());
         assertNotNull(addedReference);
     }
 
     @Test
     void ensureMobServiceDeletesMob(){
-        MutateNonPlayerCharacterCommand mob = createNonPlayerCharacter();
+        NonPlayerCharacterDto mob = createNonPlayerCharacter();
         nonPlayerCharacterService.deleteNonPlayerCharacter(mob);
-        assertThrows(EmptyResultDataAccessException.class, () -> nonPlayerCharacterService.getNonPlayerCharacterByName(mob));
+        assertThrows(EmptyResultDataAccessException.class, () -> nonPlayerCharacterService.getNonPlayerCharacterByName(mob.name()));
     }
 
-    private MutateNonPlayerCharacterCommand mockUpNonPlayerCharacter(String name, float health){
-        return MutateNonPlayerCharacterCommand.builder()
-                .name(name)
-                .health(health)
-                .created_at(temporalValueFactory.create_timestamp())
-                .build();
+    private NonPlayerCharacterDto mockUpNonPlayerCharacter(String name, float health){
+        return new NonPlayerCharacterDto(name,health,null,temporalValueFactory.create_datetimestamp(),tokenService.createTokenFor(temporalValueFactory.create_datetimestamp()));
     }
 
-    private MutateNonPlayerCharacterCommand createNonPlayerCharacter(){
-        MutateNonPlayerCharacterCommand mob = basicDataNonPlayerCharacter;
-        nonPlayerCharacterService.createInstanceByMutateCommand(mob);
+    private NonPlayerCharacterDto createNonPlayerCharacter(){
+        NonPlayerCharacterDto mob = basicDataNonPlayerCharacter;
+        nonPlayerCharacterService.createInstanceByDTO(mob);
         return mob;
     }
 }

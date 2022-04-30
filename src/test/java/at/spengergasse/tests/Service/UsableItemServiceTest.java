@@ -1,4 +1,4 @@
-package at.spengergasse.tests;
+package at.spengergasse.tests.Service;
 
 import _21224bhifPos1CsesiereiBlocketWiki.Application;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.ItemService;

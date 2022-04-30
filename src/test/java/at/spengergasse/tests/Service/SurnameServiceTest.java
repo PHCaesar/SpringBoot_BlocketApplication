@@ -1,7 +1,8 @@
-package at.spengergasse.tests;
+package at.spengergasse.tests.Service;
 
 import _21224bhifPos1CsesiereiBlocketWiki.Application;
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.Surname;
+import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.Dtos.SurnameDto;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.MutateCommands.MutateSurnameCommand;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.TemporalValueFactory;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.SurnameService;
@@ -30,7 +31,7 @@ public class SurnameServiceTest {
     private SurnameService surnameService;
 
 
-    private MutateSurnameCommand basicDataSurname;
+    private SurnameDto basicDataSurname;
 
 
     @BeforeEach
@@ -43,34 +44,31 @@ public class SurnameServiceTest {
 
     @Test
     void ensureUserServiceWorksProperlyWithMutateBlockCommand(){
-        Surname addedReference = surnameService.createInstanceByMutateCommand(basicDataSurname);
-        assertEquals(basicDataSurname.getName(), addedReference.getName());
+        Surname addedReference = surnameService.createInstanceByDTO(basicDataSurname);
+        assertEquals(basicDataSurname.name(), addedReference.getName());
     }
 
     @Test
     void ensureUserServiceFindsMutateBlockCommand(){
-        MutateSurnameCommand surname = createSurname();
-        Surname addedReference = surnameService.getByName(surname);
+        SurnameDto surname = createSurname();
+        Surname addedReference = surnameService.getByName(surname.name());
         assertNotNull(addedReference);
     }
 
     @Test
     void ensureMobServiceDeletesMob(){
-        MutateSurnameCommand surname = createSurname();
+        SurnameDto surname = createSurname();
         surnameService.deleteSurname(surname);
-        assertThrows(EmptyResultDataAccessException.class, () -> surnameService.getByName(surname));
+        assertThrows(EmptyResultDataAccessException.class, () -> surnameService.getByName(surname.name()));
     }
 
-    private MutateSurnameCommand mockUpSurname(String name){
-        return MutateSurnameCommand.builder()
-                .name(name)
-                .created_at(temporalValueFactory.create_timestamp())
-                .build();
+    private SurnameDto mockUpSurname(String name){
+        return new SurnameDto(name,temporalValueFactory.create_datetimestamp());
     }
 
-    private MutateSurnameCommand createSurname(){
-        MutateSurnameCommand surname = basicDataSurname;
-        surnameService.createInstanceByMutateCommand(surname);
+    private SurnameDto createSurname(){
+        SurnameDto surname = basicDataSurname;
+        surnameService.createInstanceByDTO(surname);
         return surname;
     }
 }

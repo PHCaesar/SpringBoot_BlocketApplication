@@ -1,7 +1,9 @@
 package _21224bhifPos1CsesiereiBlocketWiki.Services;
 
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.GameUser;
+import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.Dtos.GameUserDto;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.MutateCommands.MutateUserCommand;
+import _21224bhifPos1CsesiereiBlocketWiki.Services.Interfaces.IUserService;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.exceptions.UniversalExceptionStatements;
 import _21224bhifPos1CsesiereiBlocketWiki.persistence.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,16 +18,15 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 @Transactional
-public class UserService {
-    //TODO : Use DTOs
+public class UserService implements IUserService {
 
     public final UserRepository userRepository;
 
     // GET
-    public GameUser getUserByName(MutateUserCommand user){
+    public GameUser getUserByName(GameUserDto user){
         checkParameterInput(user);
 
-        var realUser = userRepository.findByFirstnameAndUsername(user.getFirstname() ,user.getUsername());
+        var realUser = userRepository.findByFirstnameAndUsername(user.firstname() ,user.username());
         log.info("Found {} realUser", realUser);
         return realUser;
     }
@@ -36,10 +37,10 @@ public class UserService {
     }
 
     // CREATE
-    public GameUser insertUser(MutateUserCommand user){
+    public GameUser insertUser(GameUserDto user){
         checkParameterInput(user);
-        if(userRepository.findByFirstnameAndUsername(user.getFirstname() ,user.getUsername())==null){
-            GameUser userInstance = createInstanceByMutateCommand(user);
+        if(userRepository.findByFirstnameAndUsername(user.firstname() ,user.username())==null){
+            GameUser userInstance = createInstanceByDTO(user);
             userRepository.insert(userInstance);
             log.info("insertUser {} userInstance", userInstance);
             return userInstance;
@@ -50,11 +51,11 @@ public class UserService {
     }
 
     // UPDATE
-    public GameUser updateUser(MutateUserCommand user){
+    public GameUser updateUser(GameUserDto user){
         checkParameterInput(user);
 
-        if(userRepository.findByFirstnameAndUsername(user.getFirstname() ,user.getUsername())!=null){
-            GameUser userInstance = createInstanceByMutateCommand(user);
+        if(userRepository.findByFirstnameAndUsername(user.firstname() ,user.username())!=null){
+            GameUser userInstance = createInstanceByDTO(user);
             userRepository.insert(userInstance);
             log.info("updateUser {} userInstance", userInstance);
             return userInstance;
@@ -65,11 +66,11 @@ public class UserService {
     }
 
     // DELETE
-    public void deleteUser(MutateUserCommand user) {
+    public void deleteUser(GameUserDto user) {
         checkParameterInput(user);
-        if(userRepository.findByFirstnameAndUsername(user.getFirstname() ,user.getUsername())!=null) {
+        if(userRepository.findByFirstnameAndUsername(user.firstname() ,user.username())!=null) {
             log.info("deleteUser {} user", user);
-            userRepository.delete(userRepository.findByFirstnameAndUsername(user.getFirstname(), user.getUsername()));
+            userRepository.delete(userRepository.findByFirstnameAndUsername(user.firstname(), user.username()));
         }
         else {
             log.warn("deleteUser User " + UniversalExceptionStatements.DUPLICATE_DATA_FOUND);
@@ -77,25 +78,30 @@ public class UserService {
         }
     }
 
-    public void checkParameterInput(MutateUserCommand user){
-        if(user.getUsername().equals(null)) {
+    public void deleteAll() {
+        userRepository.deleteAll();
+    }
+
+    public void checkParameterInput(GameUserDto user){
+        if(user.username().equals(null)) {
             log.warn("checkParameterInput User.Firstname" + UniversalExceptionStatements.BLANK_OR_EMPTY_MSG);
             throw new IllegalArgumentException("Username " + UniversalExceptionStatements.BLANK_OR_EMPTY_MSG);
         }
-        if(user.getFirstname().equals(null)) {
+        if(user.firstname().equals(null)) {
             log.warn("checkParameterInput User.Firstname" + UniversalExceptionStatements.BLANK_OR_EMPTY_MSG);
             throw new IllegalArgumentException("Firstname " + UniversalExceptionStatements.BLANK_OR_EMPTY_MSG);
         }
     }
 
-    public GameUser createInstanceByMutateCommand(MutateUserCommand user){
+    public GameUser createInstanceByDTO(GameUserDto user){
         GameUser userInstance = GameUser.builder()
-                .created_at(user.getCreated_at())
-                .name(user.getName())
-                .username(user.getUsername())
-                .birthDate(user.getBirthDate())
-                .firstname(user.getFirstname())
-                .surnames(user.getSurnames())
+                .created_at(user.localDateTime())
+                .name(user.name())
+                .username(user.username())
+                .birthDate(user.birthDate())
+                .firstname(user.firstname())
+                .surnames(user.surnames())
+                .token(user.token())
                 .build();
         userRepository.insert(userInstance);
         log.info("createInstanceByMutateCommand {} userInstance", userInstance);

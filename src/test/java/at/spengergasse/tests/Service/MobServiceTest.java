@@ -1,4 +1,4 @@
-package at.spengergasse.tests;
+package at.spengergasse.tests.Service;
 
 import _21224bhifPos1CsesiereiBlocketWiki.Application;
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.Mob;
@@ -6,6 +6,7 @@ import _21224bhifPos1CsesiereiBlocketWiki.Domain.MobType;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.Dtos.MobDto;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.TemporalValueFactory;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.MobService;
+import _21224bhifPos1CsesiereiBlocketWiki.Services.TokenService;
 import _21224bhifPos1CsesiereiBlocketWiki.persistence.MobRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,8 @@ public class MobServiceTest {
     private MobRepository mobRepository;
     @Autowired
     private TemporalValueFactory temporalValueFactory;
+    @Autowired
+    private TokenService tokenService;
     private MobService mobService;
 
 
@@ -51,15 +54,11 @@ public class MobServiceTest {
     @Test
     void ensureUserServiceFindsMutateBlockCommand(){
         MobDto mob = createMob();
-        Mob addedReference = mobService.getMobByName(mob);
+        Mob addedReference = mobService.getMobByName(mob.name());
         assertNotNull(addedReference);
     }
     private MobDto mockUpMob(String name, MobType type){
-        return MobDto.builder()
-                .name(name)
-                .type(type)
-                .created_at(temporalValueFactory.create_timestamp())
-                .build();
+        return new MobDto(name,null,type,temporalValueFactory.create_datetimestamp(),tokenService.createTokenFor(temporalValueFactory.create_datetimestamp()));
     }
 
     private MobDto createMob(){

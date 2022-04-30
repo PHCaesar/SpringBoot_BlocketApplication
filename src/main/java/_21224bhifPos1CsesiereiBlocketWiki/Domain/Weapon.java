@@ -18,13 +18,13 @@ import java.util.function.Predicate;
 @Data
 @NoArgsConstructor @AllArgsConstructor
 @Table(name = "Weapons")
-
+@Builder
 public class Weapon extends Item
 {
     private LocalDateTime created_at;
     private String description;
     private int damage;
-    private String token;
+    private String token,name;
 
     @Embedded
     private WeaponClass classification;

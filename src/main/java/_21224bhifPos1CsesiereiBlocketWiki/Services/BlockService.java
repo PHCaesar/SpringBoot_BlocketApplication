@@ -5,6 +5,7 @@ import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.Dtos.BlockDto;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.MutateCommands.MutateBlockCommand;
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.Block;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.TemporalValueFactory;
+import _21224bhifPos1CsesiereiBlocketWiki.Services.Interfaces.IBlockService;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.exceptions.UniversalExceptionStatements;
 import _21224bhifPos1CsesiereiBlocketWiki.persistence.BlockRepository;
 import lombok.NoArgsConstructor;
@@ -15,12 +16,13 @@ import org.springframework.stereotype.Service;
 import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 
 @Log4j2
 @RequiredArgsConstructor
 @Service
 @Transactional
-public class BlockService {
+public class BlockService implements IBlockService {
     // Parameterized Exception output
 
     private final BlockRepository blockRepository;
@@ -90,8 +92,15 @@ public class BlockService {
         }
     }
 
+    public void deleteAll() {
+        blockRepository.deleteAll();
+    }
+
 
     public void checkParameterInput(BlockDto block){
+
+        Objects.requireNonNull(block);
+
         if(block.name().isEmpty()) {
             log.warn("checkParameterInput Block " + UniversalExceptionStatements.BLANK_OR_EMPTY_MSG);
             throw new IllegalArgumentException("Name " + UniversalExceptionStatements.BLANK_OR_EMPTY_MSG);
@@ -103,9 +112,13 @@ public class BlockService {
     }
 
     public Block createInstanceByDTO(BlockDto block){
+        Objects.requireNonNull(block);
+
         Block blockInstance = Block.builder()
                 .blockname(block.blockname())
                 .created_at(block.created_at())
+                .size(block.size())
+                .name(block.name())
                 .blockDurability(block.blockDurability())
                 .build();
         blockRepository.insert(blockInstance);
