@@ -1,0 +1,24 @@
+= Blocket - Guide
+Cserich Philipp
+29.4.22
+
+This Project is used for learning purposes.
+
+The Team will focuse on creating a Webbased Wiki Page
+with SpringBoot and Java
+
+== Views footnote:[Web Page Frontend]
+
+[%interactive]
+* [*] User Page
+* [x] Item Page
+* [ ] Mob Page
+* [ ] Class Setups
+
+
+== Exceptions footnote:[Error messages that could occure while running the Application]
+Don't be scared getting one of these!
+[source,java]
+----
+include::{docfile}/../../../java/_21224bhifPos1CsesiereiBlocketWiki/Services/exceptions/UniversalExceptionStatements.java[tag=UniversalExceptions]
+----
