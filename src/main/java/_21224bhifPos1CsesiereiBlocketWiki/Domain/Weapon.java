@@ -26,7 +26,7 @@ public class Weapon extends Item
     private int damage;
     private String token,name;
 
-    @Embedded
+    @Enumerated(EnumType.STRING)
     private WeaponClass classification;
 
 }

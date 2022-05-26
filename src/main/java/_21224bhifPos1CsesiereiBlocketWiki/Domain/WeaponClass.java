@@ -1,5 +1,8 @@
 package _21224bhifPos1CsesiereiBlocketWiki.Domain;
 
+import com.querydsl.core.annotations.QueryEmbeddable;
+import lombok.Builder;
+
 import javax.persistence.Embeddable;
 
 /*
@@ -8,10 +11,15 @@ import javax.persistence.Embeddable;
  * Available Weaponclasses in the Game
  */
 
-@Embeddable
+//@Embeddable
+//@QueryEmbeddable
 public enum WeaponClass {
     MELEE,
     RANGED,
     MAGE,
-    BENDER
+    BENDER;
+
+    public void WeaponClass(){
+
+    }
 }

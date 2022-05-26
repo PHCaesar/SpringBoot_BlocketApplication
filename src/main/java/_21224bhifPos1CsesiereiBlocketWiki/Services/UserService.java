@@ -55,8 +55,8 @@ public class UserService implements IUserService {
         checkParameterInput(user);
 
         if(userRepository.findByFirstnameAndUsername(user.firstname() ,user.username())!=null){
+            deleteUser(new GameUserDto(userRepository.findByFirstnameAndUsername(user.firstname() ,user.username())));
             GameUser userInstance = createInstanceByDTO(user);
-            userRepository.insert(userInstance);
             log.info("updateUser {} userInstance", userInstance);
             return userInstance;
         } else {
@@ -83,11 +83,11 @@ public class UserService implements IUserService {
     }
 
     public void checkParameterInput(GameUserDto user){
-        if(user.username().equals(null)) {
+        if(user.username()==null||user.username().isBlank()) {
             log.warn("checkParameterInput User.Firstname" + UniversalExceptionStatements.BLANK_OR_EMPTY_MSG);
             throw new IllegalArgumentException("Username " + UniversalExceptionStatements.BLANK_OR_EMPTY_MSG);
         }
-        if(user.firstname().equals(null)) {
+        if(user.firstname()==null||user.firstname().isBlank()) {
             log.warn("checkParameterInput User.Firstname" + UniversalExceptionStatements.BLANK_OR_EMPTY_MSG);
             throw new IllegalArgumentException("Firstname " + UniversalExceptionStatements.BLANK_OR_EMPTY_MSG);
         }

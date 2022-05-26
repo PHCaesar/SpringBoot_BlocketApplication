@@ -65,7 +65,59 @@ public class GameUserServiceTest {
     void ensureUserServiceDeletesUser(){
         GameUserDto user = createUser();
         userService.deleteUser(user);
-        assertThrows(EmptyResultDataAccessException.class, () -> userService.getUserByName(user));
+        assertEquals(0,userService.getAllUser().size());
+    }
+
+    @Test
+    void ensureUserServiceDeletesNonExistentUser(){
+        assertThrows(IllegalArgumentException.class,()->userService.deleteUser(basicDataUser));
+    }
+
+    @Test
+    void ensureUserServiceDeletesAllUsers(){
+        createUser();
+        userService.insertUser(mockUpUser(LocalDate.now(),"Caesar","Philipp"));
+        assertEquals(2,userService.getAllUser().size());
+        userService.deleteAll();
+        assertEquals(0,userService.getAllUser().size());
+    }
+
+    @Test
+    void ensureUserServiceInsertsUser(){
+        GameUser gu =userService.insertUser(basicDataUser);
+        assertEquals(userService.getAllUser().get(0),gu);
+    }
+
+    @Test
+    void ensureUserServiceDoesntInsertDuplicateUser(){
+        GameUser gu =userService.insertUser(basicDataUser);
+        assertThrows(IllegalArgumentException.class,()->userService.insertUser(basicDataUser));
+    }
+
+    @Test
+    void ensureUserServiceUpdatesUser(){
+        GameUserDto gdto  =basicDataUser;
+        userService.insertUser(gdto);
+        gdto = mockUpUser(LocalDate.now(),"JM","Josh");
+        GameUser us =userService.updateUser(gdto);
+        assertEquals(userService.getAllUser().get(0),us);
+    }
+
+    @Test
+    void ensureUserServiceUpdatesNonExistentUser(){
+        assertThrows(IllegalArgumentException.class,()->userService.updateUser(basicDataUser));
+    }
+
+    @Test
+    void ensureUserServiceChecksParameterInputUsername(){
+        GameUserDto gameUserDto= mockUpUser(LocalDate.now(),"","Hello");
+        assertThrows(IllegalArgumentException.class,()->userService.checkParameterInput(gameUserDto));
+    }
+
+    @Test
+    void ensureUserServiceChecksParameterInputFirstname(){
+        GameUserDto gameUserDto= mockUpUser(LocalDate.now(),"Hi","");
+        assertThrows(IllegalArgumentException.class,()->userService.checkParameterInput(gameUserDto));
     }
 
 

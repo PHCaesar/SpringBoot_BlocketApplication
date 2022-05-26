@@ -2,6 +2,7 @@ package _21224bhifPos1CsesiereiBlocketWiki.persistence;
 
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.Item;
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.UsableItem;
+import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.Dtos.UsableItemDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
@@ -15,9 +16,10 @@ public interface ItemRepository extends JpaRepository<UsableItem,Long> ,
         ItemRepositoryCustom
 {
 
-    UsableItem findByItemID(int id);
+    UsableItem findByItemID(long id);
     UsableItem findByName(String name);
     List<UsableItem> findBySizeAfter(int size);
     List<UsableItem> findBySizeBefore(int size);
+    UsableItem updateItem(UsableItem item);
 
 }

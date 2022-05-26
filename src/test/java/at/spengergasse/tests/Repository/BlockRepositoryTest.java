@@ -17,6 +17,10 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.transaction.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(SpringExtension.class)
@@ -30,7 +34,6 @@ public class BlockRepositoryTest {
     private TemporalValueFactory temporalValueFactory;
 
 
-
     @Test
     public void ensureRepositoryListAllisNullonEmpty(){
         Assert.isEmpty(blockRepository.ListAll());
@@ -38,6 +41,8 @@ public class BlockRepositoryTest {
 
     @Test
     public void ensureRepositoryAddsBlockInstance(){
+        Objects.requireNonNull(blockRepository);
+
         Block block = MockUp.mockUpBlock("Franz",2,"Ferdinant",4,temporalValueFactory.create_datetimestamp(),"");
         blockRepository.insert(block);
         assertEquals(block,blockRepository.findByDTO(new BlockDto(block)));
@@ -45,6 +50,8 @@ public class BlockRepositoryTest {
 
     @Test
     public void ensureRepositoryRemovesBlockInstance(){
+        Objects.requireNonNull(blockRepository);
+
         Block block = MockUp.mockUpBlock("Franz",2,"Ferdinant",4,temporalValueFactory.create_datetimestamp(),"");
         blockRepository.insert(block);
         assertEquals(block,blockRepository.findByDTO(new BlockDto(block)));
@@ -54,9 +61,44 @@ public class BlockRepositoryTest {
 
     @Test
     public void ensureRepositoryDetectsDuplicateData(){
+        Objects.requireNonNull(blockRepository);
+
         Block block = MockUp.mockUpBlock("Franz",2,"Ferdinant",4,temporalValueFactory.create_datetimestamp(),"");
         blockRepository.insert(block);
         blockRepository.insert(block);
         assertEquals(1,blockRepository.findAll().size());
+    }
+
+    @Test
+    public void ensureRepositoryFindsBlockByDTO(){
+        Objects.requireNonNull(blockRepository);
+
+        Block block = MockUp.mockUpBlock("Franz",2,"Ferdinant",4,temporalValueFactory.create_datetimestamp(),"");
+        blockRepository.insert(block);
+        assertEquals(block,blockRepository.findByDTO(new BlockDto(block)));
+    }
+
+    @Test
+    public void ensureRepositoryFindsBlockByDurabilty(){
+        Objects.requireNonNull(blockRepository);
+
+        Block block = MockUp.mockUpBlock("Franz",2,"Ferdinant",4,temporalValueFactory.create_datetimestamp(),"");
+        blockRepository.insert(block);
+        assertEquals(block,blockRepository.findByBlocksDurability(block.getBlockDurability()).get(0));
+    }
+
+    @Test
+    public void ensureRepositoryListsAllBlocks(){
+        Objects.requireNonNull(blockRepository);
+
+        List<Block> blocks = new ArrayList<>();
+        Block block = MockUp.mockUpBlock("Franz",2,"Ferdinant",4,temporalValueFactory.create_datetimestamp(),"");
+        blockRepository.insert(block);
+        blocks.add(block);
+        block = MockUp.mockUpBlock("Dirt",10,"Dirtblock",2,temporalValueFactory.create_datetimestamp(),"");
+        blockRepository.insert(block);
+        blocks.add(block);
+
+        assertEquals(blocks,blockRepository.findAll());
     }
 }

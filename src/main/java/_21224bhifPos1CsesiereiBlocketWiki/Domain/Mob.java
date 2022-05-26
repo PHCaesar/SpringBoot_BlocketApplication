@@ -1,6 +1,7 @@
 package _21224bhifPos1CsesiereiBlocketWiki.Domain;
 
 import lombok.*;
+import org.hibernate.engine.internal.Cascade;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
@@ -23,9 +24,10 @@ import java.util.function.Predicate;
 public class Mob extends AbstractPersistable<Long> {
     private LocalDateTime created_at;
     private String name;
-    @OneToMany(targetEntity = UsableItem.class,fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = UsableItem.class,fetch = FetchType.EAGER,cascade = CascadeType.REMOVE)
     private List<UsableItem> drops;
-    @Embedded
+    //@Embedded
+    @Enumerated(EnumType.STRING)
     private MobType type;
     private String token;
 

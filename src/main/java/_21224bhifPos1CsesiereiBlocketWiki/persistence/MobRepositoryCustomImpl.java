@@ -1,18 +1,18 @@
 package _21224bhifPos1CsesiereiBlocketWiki.persistence;
 
-import _21224bhifPos1CsesiereiBlocketWiki.Domain.Mob;
-import _21224bhifPos1CsesiereiBlocketWiki.Domain.MobType;
-import _21224bhifPos1CsesiereiBlocketWiki.Domain.UsableItem;
+import _21224bhifPos1CsesiereiBlocketWiki.Domain.*;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.Dtos.MobDto;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.MutateCommands.MutateMobCommand;
+import com.querydsl.jpa.JPAQueryBase;
+import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.engine.internal.Cascade;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +28,9 @@ public class MobRepositoryCustomImpl implements MobRepositoryCustom{
     @Override
     public void insert(Mob mob) {
         entityManager.persist(mob);
+        try{
+            mob.getDrops().stream().forEach((current)->entityManager.persist(current));
+        } catch (Exception e){}
         entityManager.flush();
     }
 
@@ -41,8 +44,14 @@ public class MobRepositoryCustomImpl implements MobRepositoryCustom{
 
     @Override
     public List<Mob> findByDrops(List<UsableItem> drops) {
-        String sqlQueryString = "SELECT id FROM Mob WHERE drops = :drops";
-        TypedQuery<Long> query = entityManager.createQuery(sqlQueryString, Long.class);
+        //QMob mob = QMob.mob;
+        //QUsableItem usableItem = QUsableItem.usableItem;
+        //JPAQuery query = new JPAQuery(entityManager);
+        //JPAQueryBase jb = query.from(mob).innerJoin(usableItem);
+        //jb.where(drops.)
+        //List<Mob> mobs = ;
+        
+        Query query = entityManager.createQuery("SELECT id FROM Mob WHERE drops = :drops ");
         query.setParameter("drops", drops);
 
         List<Long> ids = query.getResultList();
@@ -60,8 +69,7 @@ public class MobRepositoryCustomImpl implements MobRepositoryCustom{
 
     @Override
     public List<Mob> findByType(MobType type) {
-        String sqlQueryString = "SELECT id FROM Mob WHERE type = :type";
-        TypedQuery<Long> query = entityManager.createQuery(sqlQueryString, Long.class);
+        Query query = entityManager.createQuery("SELECT id FROM Mob WHERE type = :type",Long.class);
         query.setParameter("type", type);
 
         List<Long> ids = query.getResultList();

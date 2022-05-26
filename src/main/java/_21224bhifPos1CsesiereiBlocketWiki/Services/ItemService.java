@@ -8,8 +8,11 @@ import _21224bhifPos1CsesiereiBlocketWiki.Services.Interfaces.IItemService;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.exceptions.UniversalExceptionStatements;
 import _21224bhifPos1CsesiereiBlocketWiki.persistence.ItemRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
 
 @RequiredArgsConstructor
@@ -33,31 +36,44 @@ public class ItemService implements IItemService {
     public UsableItem insertItem(UsableItemDto item){
         checkParameterInput(item);
 
-        if(itemRepository.findByName(item.name())==null){
+        try{
+            itemRepository.findByName(item.name());
+            throw new IllegalArgumentException("Item "+ UniversalExceptionStatements.DUPLICATE_DATA_FOUND);
+        }
+        catch (EmptyResultDataAccessException exception){
             UsableItem itemInstance = createInstanceByDTO(item);
             itemRepository.insert(itemInstance);
             return itemInstance;
-        } else throw new IllegalArgumentException("Item "+ UniversalExceptionStatements.DUPLICATE_DATA_FOUND);
+        }
     }
 
     // UPDATE
     public UsableItem updateItem(UsableItemDto item){
         checkParameterInput(item);
 
-        if(itemRepository.findByName(item.name())!=null){
+        try{
+            itemRepository.findByName(item.name());
             UsableItem itemInstance = createInstanceByDTO(item);
+            itemRepository.delete(itemRepository.findByName(item.name()));
             itemRepository.insert(itemInstance);
             return itemInstance;
-        } else throw new IllegalArgumentException("Item "+UniversalExceptionStatements.DATA_NOT_FOUND);
+        } catch(EmptyResultDataAccessException exception)
+        {
+            throw new IllegalArgumentException("Item "+UniversalExceptionStatements.DATA_NOT_FOUND);
+        }
     }
 
     // DELETE
     public void deleteItem(UsableItemDto item){
         checkParameterInput(item);
 
-        if(itemRepository.findByName(item.name())!=null)
+        try {
+            itemRepository.findByName(item.name());
             itemRepository.delete(itemRepository.findByName(item.name()));
-        else throw new IllegalArgumentException("Block "+UniversalExceptionStatements.DATA_NOT_FOUND);
+        }catch (EmptyResultDataAccessException exception)
+        {
+            throw new IllegalArgumentException("Block "+UniversalExceptionStatements.DATA_NOT_FOUND);
+        }
     }
 
     @Override
@@ -76,6 +92,9 @@ public class ItemService implements IItemService {
         UsableItem itemInstance = new UsableItem();
         itemInstance.setName(item.name());
         itemInstance.setSize(item.size());
+        itemInstance.setDescription(item.description());
+        itemInstance.setCreated_at(item.created_at());
+        itemInstance.setToken(item.token());
         return itemInstance;
     }
 }

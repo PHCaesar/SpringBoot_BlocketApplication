@@ -33,7 +33,6 @@ public class BlockController {
     public HttpEntity<List<Block>> getBlocks(){
         List<Block> blocks = blockService.getAllBlocks(); //Should be be using DTOS while returning MutateCommands to the Service
         return ResponseEntity.ok(blocks);
-
     }
 
     @GetMapping({"",PATH_VAR_DURABILITY})

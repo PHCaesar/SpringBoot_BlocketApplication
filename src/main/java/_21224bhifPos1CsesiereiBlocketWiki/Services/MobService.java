@@ -9,6 +9,8 @@ import _21224bhifPos1CsesiereiBlocketWiki.Services.exceptions.UniversalException
 import _21224bhifPos1CsesiereiBlocketWiki.persistence.MobRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.InvalidDataAccessResourceUsageException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -37,26 +39,29 @@ public class MobService implements IMobService {
     // CREATE
     public Mob insertMob(MobDto mob){
         checkParameterInput(mob);
-        if(mobRepository.findByDTO(mob)==null){
+        try{
+            mobRepository.findByDTO(mob);
+            log.warn("insertMob Mob " + UniversalExceptionStatements.DUPLICATE_DATA_FOUND);
+            throw new IllegalArgumentException("Mob "+ UniversalExceptionStatements.DUPLICATE_DATA_FOUND);
+
+        } catch(EmptyResultDataAccessException exception) {
             Mob mobInstance = createInstanceByDTO(mob);
             mobRepository.insert(mobInstance);
             log.info("insertMob {} mobInstance", mobInstance);
             return mobInstance;
-        } else {
-            log.warn("insertMob Mob " + UniversalExceptionStatements.DUPLICATE_DATA_FOUND);
-            throw new IllegalArgumentException("Mob "+ UniversalExceptionStatements.DUPLICATE_DATA_FOUND);
-        }
+             }
     }
 
     // UPDATE
     public Mob updateMob(MobDto mob){
         checkParameterInput(mob);
-        if(mobRepository.findByDTO(mob)!=null){
+        try{
+            mobRepository.findByDTO(mob);
+            deleteMob(mob);
             Mob mobInstance = createInstanceByDTO(mob);
-            mobRepository.insert(mobInstance);
             log.info("updateMob {} mobInstance", mobInstance);
             return mobInstance;
-        } else {
+        } catch (EmptyResultDataAccessException exception){
             log.warn("updateMob Mob " + UniversalExceptionStatements.DUPLICATE_DATA_FOUND);
             throw new IllegalArgumentException("Mob "+UniversalExceptionStatements.DATA_NOT_FOUND);
         }
@@ -65,11 +70,12 @@ public class MobService implements IMobService {
     // DELETE
     public void deleteMob(MobDto mob){
         checkParameterInput(mob);
-        if(mobRepository.findByDTO(mob)!=null) {
+        try{
+            mobRepository.findByDTO(mob);
             log.info("deleteMob {} mob", mob);
             mobRepository.delete(mobRepository.findByDTO(mob));
         }
-        else {
+        catch (EmptyResultDataAccessException exception){
             log.warn("deleteMob Mob " + UniversalExceptionStatements.DUPLICATE_DATA_FOUND);
             throw new IllegalArgumentException("Mob "+UniversalExceptionStatements.DATA_NOT_FOUND);
         }
@@ -80,11 +86,11 @@ public class MobService implements IMobService {
     }
 
     public void checkParameterInput(MobDto mob){
-        if(mob.name().isEmpty()) {
+        if(mob.name()==null||mob.name().isEmpty()) {
             log.warn("checkParameterInput Mob.Name" + UniversalExceptionStatements.BLANK_OR_EMPTY_MSG);
             throw new IllegalArgumentException("Name " + UniversalExceptionStatements.BLANK_OR_EMPTY_MSG);
         }
-        if(mob.type().equals(null)) {
+        if(mob.type()==null) {
             log.warn("checkParameterInput Mob.Type" + UniversalExceptionStatements.BLANK_OR_EMPTY_MSG);
             throw new IllegalArgumentException("Type " + UniversalExceptionStatements.BLANK_OR_EMPTY_MSG);
         }

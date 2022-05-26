@@ -69,8 +69,8 @@ public class BlockService implements IBlockService {
         checkParameterInput(block);
 
         if(blockRepository.findByDTO(block)!=null){
+            deleteBlock(block);
             Block blockInstance = createInstanceByDTO(block);
-            blockRepository.insert(blockInstance);
             log.info("updateBlock {} blockInstance", blockInstance);
             return blockInstance;
         } else {

@@ -7,8 +7,10 @@ import _21224bhifPos1CsesiereiBlocketWiki.Services.exceptions.UniversalException
 import _21224bhifPos1CsesiereiBlocketWiki.persistence.SurnameRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 
 @Log4j2
@@ -31,26 +33,28 @@ public class SurnameService implements ISurnameService {
     //CREATE
     public Surname insertSurname(SurnameDto srn){
         checkParameterInput(srn);
-        if(surnameRepository.findByName(srn.name())== null){
+        try{
+            surnameRepository.findByName(srn.name());
+            log.warn("insertSurname SRN " + UniversalExceptionStatements.DUPLICATE_DATA_FOUND);
+            throw new IllegalArgumentException("SRN " + UniversalExceptionStatements.DUPLICATE_DATA_FOUND);
+        } catch(EmptyResultDataAccessException exception) {
             Surname srnInstance = createInstanceByDTO(srn);
             surnameRepository.insert(srnInstance);
             log.info("insertSurname {} srnInstance", srnInstance);
             return srnInstance;
-        } else {
-            log.warn("insertSurname SRN " + UniversalExceptionStatements.DUPLICATE_DATA_FOUND);
-            throw new IllegalArgumentException("SRN " + UniversalExceptionStatements.DUPLICATE_DATA_FOUND);
         }
     }
 
     //Update
     public Surname updateSurname(SurnameDto srn){
         checkParameterInput(srn);
-        if (surnameRepository.findByName(srn.name()) != null) {
+        try{
+            surnameRepository.findByName(srn.name());
+            deleteSurname(new SurnameDto(surnameRepository.findByName(srn.name())));
             Surname srnInstance = createInstanceByDTO(srn);
-            surnameRepository.insert(srnInstance);
             log.info("updateSurname {} srnInstance", srnInstance);
             return srnInstance;
-        }else {
+        } catch(EmptyResultDataAccessException exception) {
             log.warn("updateSurname SRN " + UniversalExceptionStatements.DUPLICATE_DATA_FOUND);
             throw new IllegalArgumentException("SRN " + UniversalExceptionStatements.DATA_NOT_FOUND);
         }
@@ -59,11 +63,12 @@ public class SurnameService implements ISurnameService {
     //DELETE
     public void deleteSurname(SurnameDto srn){
         checkParameterInput(srn);
-        if(surnameRepository.findByName(srn.name())!=null) {
+        try{
+            surnameRepository.findByName(srn.name());
             log.info("deleteSurname {} srn", srn);
             surnameRepository.delete(surnameRepository.findByName((srn.name())));
         }
-        else {
+        catch(EmptyResultDataAccessException exception) {
             log.warn("deleteSurname SRN " + UniversalExceptionStatements.DUPLICATE_DATA_FOUND);
             throw new IllegalArgumentException("SRN "+ UniversalExceptionStatements.DATA_NOT_FOUND);
         }

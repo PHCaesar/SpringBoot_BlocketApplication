@@ -1,6 +1,7 @@
 package _21224bhifPos1CsesiereiBlocketWiki.persistence;
 
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.NonPlayerCharacter;
+import _21224bhifPos1CsesiereiBlocketWiki.Domain.UsableItem;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.MutateCommands.MutateNonPlayerCharacterCommand;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,7 +38,7 @@ public class NonPlayerCharacterRepositoryCustomImpl implements  NonPlayerCharact
 
     @Override
     public List<NonPlayerCharacter> findByShopItemsNotNull() {
-        Query query = entityManager.createQuery("SELECT id FROM NonPlayerCharacter WHERE shopItems.size = 0");
+        Query query = entityManager.createQuery("SELECT NonPlayerCharacter.id FROM NonPlayerCharacter WHERE NonPlayerCharacter.shopItems is not empty ");
 
         List<Long> ids = query.getResultList();
         return ids.stream().map(x-> entityManager.find(NonPlayerCharacter.class,x)).collect(Collectors.toList());

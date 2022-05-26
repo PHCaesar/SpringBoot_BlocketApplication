@@ -23,4 +23,10 @@ public class UsableItem extends Item {
     private LocalDateTime created_at;
     private String description;
     private String token;
+    private String name;
+    private int size;
+    @ManyToOne
+    private Mob mob;
+    @ManyToOne
+    private NonPlayerCharacter nonPlayerCharacter;
 }

@@ -7,9 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.*;
 
 @AllArgsConstructor @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -17,4 +15,6 @@ import javax.persistence.InheritanceType;
 public abstract class Item extends AbstractPersistable<Long> {
     private String name;
     private int size;
+    //@ManyToOne(cascade = CascadeType.REFRESH)
+    //private Mob mob;
 }

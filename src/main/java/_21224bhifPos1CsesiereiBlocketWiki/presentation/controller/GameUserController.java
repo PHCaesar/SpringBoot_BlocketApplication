@@ -40,13 +40,13 @@ public class GameUserController {
     }
 
     @GetMapping({"",PATH_VAR_DURABILITY})
-    public HttpEntity<GameUser> getUsersByNames(@PathVariable String firstname,String name){ //Param muss String sein
-        GameUser users = userService.getUserByName(new GameUserDto(null,null,firstname,name,"", null,""));
+    public HttpEntity<GameUser> getUserByNames(@PathVariable String firstname, String name,String username){ //Param muss String sein
+        GameUser users = userService.getUserByName(new GameUserDto(null,null,firstname,name,username, null,""));
         return ResponseEntity.ok(users);
     }
 
     @PostMapping({"",UniversalPathVariables.PATH_INDEX})
-    public HttpEntity<GameUser> postBlocks(@RequestBody MutateUserCommand mutateUserCommand){
+    public HttpEntity<GameUser> postUsers(@RequestBody MutateUserCommand mutateUserCommand){
         return ResponseEntity.ok(userService.insertUser(
                 new GameUserDto(GameUser.builder()
                         .name(mutateUserCommand.getName())

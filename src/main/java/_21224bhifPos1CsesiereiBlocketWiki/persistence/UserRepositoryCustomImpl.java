@@ -31,7 +31,7 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom{
 
     @Override
     public List<GameUser> findByBirthDateAfter(LocalDate birthDate) {
-        Query queryString = entityManager.createQuery("SELECT id FROM GameUser WHERE birthDate < :birthDate");
+        Query queryString = entityManager.createQuery("SELECT id FROM GameUser WHERE birthDate > :birthDate");
         queryString.setParameter("birthDate", birthDate);
 
         List<Long> ids = queryString.getResultList();
@@ -40,7 +40,7 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom{
 
     @Override
     public List<GameUser> findByBirthDateBefore(LocalDate birthDate) {
-        Query sqlQueryString = entityManager.createQuery("SELECT id FROM GameUser WHERE birthDate > :birthDate");
+        Query sqlQueryString = entityManager.createQuery("SELECT id FROM GameUser WHERE birthDate < :birthDate");
         sqlQueryString.setParameter("birthDate", birthDate);
 
         List<Long> ids = sqlQueryString.getResultList();

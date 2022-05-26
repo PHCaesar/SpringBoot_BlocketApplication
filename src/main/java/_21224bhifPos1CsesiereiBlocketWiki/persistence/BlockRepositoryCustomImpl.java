@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Getter
@@ -61,6 +62,8 @@ public class BlockRepositoryCustomImpl implements BlockRepositoryCustom {
 
     @Override
     public Block deleteBlock(Block block) {
+        Objects.requireNonNull(block);
+
         entityManager.remove(block);
         return block;
     }

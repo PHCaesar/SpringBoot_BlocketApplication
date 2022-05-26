@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 @Getter
@@ -27,11 +28,10 @@ public class GameContentRepositoryCustomImpl implements GameContentRepositoryCus
 
     @Override
     public GameContent findByUser(GameUser user) {
-        String sqlQueryString = "SELECT id FROM GameUser WHERE user = :user";
-        TypedQuery<Long> query = entityManager.createQuery(sqlQueryString, Long.class);
-        query.setParameter("user", user);
-        Long id = query.getSingleResult();
 
-        return entityManager.find(GameContent.class, id);
+        Query query = entityManager.createQuery("SELECT id FROM GameContent WHERE loggedInGameUser = :user");
+        query.setParameter("user", user);
+
+        return entityManager.find(GameContent.class, query.getSingleResult());
     }
 }

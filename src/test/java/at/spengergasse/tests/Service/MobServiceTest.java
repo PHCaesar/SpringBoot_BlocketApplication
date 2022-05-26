@@ -32,7 +32,6 @@ public class MobServiceTest {
     private TokenService tokenService;
     private MobService mobService;
 
-
     private MobDto basicDataMob;
 
 
@@ -45,25 +44,93 @@ public class MobServiceTest {
 
 
     @Test
-    void ensureUserServiceWorksProperlyWithMutateBlockCommand(){
+    void ensureMobServiceWorksProperlyWithMutateBlockCommand(){
         Mob addedReference = mobService.createInstanceByDTO(basicDataMob);
         assertEquals(basicDataMob.type(), addedReference.getType());
         assertEquals(basicDataMob.name(), addedReference.getName());
     }
 
     @Test
-    void ensureUserServiceFindsMutateBlockCommand(){
-        MobDto mob = createMob();
+    void ensureMobServiceFindsMutateBlockCommand(){
+        MobDto mob = basicDataMob;
+        mobService.insertMob(mob);
         Mob addedReference = mobService.getMobByName(mob.name());
         assertNotNull(addedReference);
     }
+
+    @Test
+    void ensureMobServiceInsertsMob(){
+        assertEquals(mobService.getAllMobs().size(),0);
+        mobService.insertMob(basicDataMob);
+        assertEquals(mobService.getAllMobs().size(),1);
+        assertEquals(mobService.getAllMobs().get(0),createMob());
+    }
+
+    @Test
+    void ensureMobServiceInsertsDuplicateMob(){
+        assertEquals(mobService.getAllMobs().size(),0);
+        mobService.insertMob(basicDataMob);
+        assertThrows(IllegalArgumentException.class,()->mobService.insertMob(basicDataMob));
+    }
+
+    @Test
+    void ensureMobServiceGetsAllMobsEmpty(){
+        assertEquals(mobService.getAllMobs().size(),0);
+    }
+    @Test
+    void ensureMobServiceUpdatesMob(){
+        mobService.insertMob(basicDataMob);
+        //Change Mob data
+        mobService.updateMob(basicDataMob);
+        assertEquals(mobService.getAllMobs().size(),1);
+    }
+
+    @Test
+    void ensureMobServiceUpdatesNonExistentMob(){
+        assertThrows(IllegalArgumentException.class,()->mobService.updateMob(basicDataMob));
+    }
+
+    @Test
+    void ensureMobServiceDeletesMob(){
+        mobService.insertMob(basicDataMob);
+        assertEquals(mobService.getAllMobs().size(),1);
+        mobService.deleteMob(basicDataMob);
+        assertEquals(mobService.getAllMobs().size(),0);
+    }
+
+    @Test
+    void ensureMobServiceDeleteNonExistentMob(){
+        assertThrows(IllegalArgumentException.class,()->mobService.deleteMob(basicDataMob));
+    }
+
+    @Test
+    void ensureMobServiceDeletesAllMobs(){
+        mobService.insertMob(basicDataMob);
+        mobService.insertMob(mockUpMob("Hainz",MobType.AGGRESSIVE));
+        mobService.insertMob(mockUpMob("Unger",MobType.FRIENDLY));
+
+        assertEquals(mobService.getAllMobs().size(),3);
+        mobService.deleteAll();
+        assertEquals(mobService.getAllMobs().size(),0);
+    }
+
+    @Test
+    void ensureMobServiceChecksParameterInputName(){
+        assertThrows(IllegalArgumentException.class,()->mobService.checkParameterInput(mockUpMob("",MobType.AGGRESSIVE)));
+        assertThrows(IllegalArgumentException.class,()->mobService.checkParameterInput(mockUpMob(null,MobType.AGGRESSIVE)));
+    }
+
+    @Test
+    void ensureMobServiceChecksParameterInputType(){
+        assertThrows(IllegalArgumentException.class,()->mobService.checkParameterInput(mockUpMob("sdfsdf",null)));
+    }
+
     private MobDto mockUpMob(String name, MobType type){
         return new MobDto(name,null,type,temporalValueFactory.create_datetimestamp(),tokenService.createTokenFor(temporalValueFactory.create_datetimestamp()));
     }
 
-    private MobDto createMob(){
+    private Mob createMob(){
         MobDto mob = basicDataMob;
-        mobService.createInstanceByDTO(mob);
-        return mob;
+        return mobService.createInstanceByDTO(mob);
     }
 }
