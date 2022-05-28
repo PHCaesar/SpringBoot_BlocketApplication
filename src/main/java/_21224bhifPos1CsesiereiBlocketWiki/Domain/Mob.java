@@ -22,6 +22,7 @@ import java.util.function.Predicate;
 @NoArgsConstructor @AllArgsConstructor
 @Table(name = "Mobs")
 public class Mob extends AbstractPersistable<Long> {
+    private String nanoId;
     private LocalDateTime created_at;
     private String name;
     @OneToMany(targetEntity = UsableItem.class,fetch = FetchType.EAGER,cascade = CascadeType.REMOVE)

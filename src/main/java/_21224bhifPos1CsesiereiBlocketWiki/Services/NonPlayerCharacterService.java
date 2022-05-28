@@ -2,6 +2,7 @@ package _21224bhifPos1CsesiereiBlocketWiki.Services;
 
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.NonPlayerCharacter;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.Dtos.NonPlayerCharacterDto;
+import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.NanoIdFactory;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Interfaces.INonPlayerCharacterService;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.exceptions.UniversalExceptionStatements;
 import _21224bhifPos1CsesiereiBlocketWiki.persistence.NonPlayerCharacterRepository;
@@ -40,6 +41,7 @@ public class NonPlayerCharacterService implements INonPlayerCharacterService {
         checkParameterInput(npc);
         if(nonPlayerCharacterRepository.findByName(npc.name())==null){
             NonPlayerCharacter npcInstance = createInstanceByDTO(npc);
+            npcInstance.setNanoId(new NanoIdFactory().randomNanoId(16));
             nonPlayerCharacterRepository.insert(npcInstance);
             log.info("insertNPC {} npcInstance", npcInstance);
             return npcInstance;

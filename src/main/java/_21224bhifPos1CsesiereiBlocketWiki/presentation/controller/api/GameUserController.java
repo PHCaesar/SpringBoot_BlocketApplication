@@ -39,7 +39,7 @@ public class GameUserController {
 
     @GetMapping({"", PATH_VAR_NAME})
     public HttpEntity<GameUser> getUserByNames(@PathVariable String firstname, String name,String username){ //Param muss String sein
-        GameUser users = userService.getUserByName(new GameUserDto(null,null,firstname,name,username, null,""));
+        GameUser users = userService.getUserByName(new GameUserDto("",null,null,firstname,name,username,null,""));
         return ResponseEntity.ok(users);
     }
 

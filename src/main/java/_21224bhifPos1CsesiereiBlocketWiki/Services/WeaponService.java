@@ -4,6 +4,7 @@ import _21224bhifPos1CsesiereiBlocketWiki.Domain.Surname;
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.Weapon;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.Dtos.WeaponDto;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.MutateCommands.MutateWeaponCommand;
+import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.NanoIdFactory;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Interfaces.IWeaponService;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.exceptions.UniversalExceptionStatements;
 import _21224bhifPos1CsesiereiBlocketWiki.persistence.WeaponRepository;
@@ -50,6 +51,7 @@ public class WeaponService implements IWeaponService {
         }catch(EmptyResultDataAccessException exception){
 
             Weapon wepInstance = createInstanceByDto(wep);
+            wepInstance.setNanoId(new NanoIdFactory().randomNanoId(16));
             weaponRepository.insert(wepInstance);
             log.info("insertWeapon {} wepInstance", wepInstance);
             return wepInstance;

@@ -2,6 +2,9 @@ package at.spengergasse.tests;
 
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.*;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.Dtos.*;
+import _21224bhifPos1CsesiereiBlocketWiki.Domain.Block;
+import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.Dtos.BlockDto;
+import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.NanoIdFactory;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -15,7 +18,7 @@ public class MockUp {
     }
 
     public static Block mockUpBlock(String name,int blockDur,String blockName,int size,LocalDateTime localDateTime,String token){
-        return Block.builder().name(name).blockDurability(blockDur).blockname(blockName).size(size).created_at(localDateTime).token(token).build();
+        return Block.builder().name(name).blockDurability(blockDur).blockname(blockName).size(size).created_at(localDateTime).token(token).nanoId(new NanoIdFactory().randomNanoId(12)).build();
     }
 
     ///ITEM
@@ -24,7 +27,7 @@ public class MockUp {
     }
 
     public static UsableItemDto mockUpItemDTO(String name , int size , LocalDateTime created_at , String description , String token){
-        return new UsableItemDto(name,size,created_at,description,token);
+        return new UsableItemDto("",name,size,created_at,description,token);
     }
 
     ///WEAPON

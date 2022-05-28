@@ -34,7 +34,7 @@ public class WeaponViewController {
 
     @PostMapping({"/update", UniversalPathVariables.PATH_INDEX})
     public String updateWeapon(@ModelAttribute MutateWeaponCommand weapon, Model model){
-        weaponService.updateWeapon(new WeaponDto(weapon.getDescription() , weapon.getDamage(), weapon.getClassification(),weapon.getName(),weapon.getSize(),null,""));
+        weaponService.updateWeapon(new WeaponDto("",weapon.getDescription() , weapon.getDamage(), weapon.getClassification(),weapon.getName(),weapon.getSize(),null,""));
 
         List<Weapon> weapons =weaponService.getAll();
         model.addAttribute("weapons",weapons);
@@ -44,7 +44,7 @@ public class WeaponViewController {
 
     @PostMapping({"/insert",UniversalPathVariables.PATH_INDEX})
     public String insertWeapon(@ModelAttribute MutateWeaponCommand weapon,Model model){
-        weaponService.insertWeapon(new WeaponDto(weapon.getDescription(),weapon.getDamage(),weapon.getClassification(),weapon.getName(),weapon.getSize(),null,""));
+        weaponService.insertWeapon(new WeaponDto("",weapon.getDescription(),weapon.getDamage(),weapon.getClassification(),weapon.getName(),weapon.getSize(),null,""));
 
         List<Weapon> weapons =weaponService.getAll();
         model.addAttribute("weapons",weapons);

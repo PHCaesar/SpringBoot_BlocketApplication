@@ -2,6 +2,7 @@ package _21224bhifPos1CsesiereiBlocketWiki.Services;
 
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.Surname;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.Dtos.SurnameDto;
+import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.NanoIdFactory;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Interfaces.ISurnameService;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.exceptions.UniversalExceptionStatements;
 import _21224bhifPos1CsesiereiBlocketWiki.persistence.SurnameRepository;
@@ -39,6 +40,7 @@ public class SurnameService implements ISurnameService {
             throw new IllegalArgumentException("SRN " + UniversalExceptionStatements.DUPLICATE_DATA_FOUND);
         } catch(EmptyResultDataAccessException exception) {
             Surname srnInstance = createInstanceByDTO(srn);
+            srnInstance.setNanoId(new NanoIdFactory().randomNanoId(16));
             surnameRepository.insert(srnInstance);
             log.info("insertSurname {} srnInstance", srnInstance);
             return srnInstance;

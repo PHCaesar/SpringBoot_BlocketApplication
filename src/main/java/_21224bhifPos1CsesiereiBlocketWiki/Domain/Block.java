@@ -22,6 +22,7 @@ import java.util.function.Predicate;
 @Data
 public class Block extends Item
 {
+    private String nanoId;
     private String name;
     private int size;
     private LocalDateTime created_at;

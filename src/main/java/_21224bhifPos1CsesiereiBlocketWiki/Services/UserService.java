@@ -3,6 +3,7 @@ package _21224bhifPos1CsesiereiBlocketWiki.Services;
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.GameUser;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.Dtos.GameUserDto;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.MutateCommands.MutateUserCommand;
+import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.NanoIdFactory;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Interfaces.IUserService;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.exceptions.UniversalExceptionStatements;
 import _21224bhifPos1CsesiereiBlocketWiki.persistence.UserRepository;
@@ -41,6 +42,7 @@ public class UserService implements IUserService {
         checkParameterInput(user);
         if(userRepository.findByFirstnameAndUsername(user.firstname() ,user.username())==null){
             GameUser userInstance = createInstanceByDTO(user);
+            userInstance.setNanoId(new NanoIdFactory().randomNanoId(16));
             userRepository.insert(userInstance);
             log.info("insertUser {} userInstance", userInstance);
             return userInstance;

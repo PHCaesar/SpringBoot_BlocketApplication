@@ -20,6 +20,7 @@ import java.util.function.Predicate;
 @NoArgsConstructor @AllArgsConstructor
 @Table(name = "UsableItems")
 public class UsableItem extends Item {
+    private String nanoId;
     private LocalDateTime created_at;
     private String description;
     private String token;

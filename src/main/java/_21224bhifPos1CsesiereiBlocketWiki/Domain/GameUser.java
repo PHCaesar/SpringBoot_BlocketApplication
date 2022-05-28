@@ -20,6 +20,7 @@ import java.util.List;
 @Entity
 @Table(name = "Users")
 public class GameUser extends AbstractPersistable<Long> {
+    private String nanoId;
     private LocalDateTime created_at;
 
     @OneToMany(targetEntity = Surname.class,fetch = FetchType.EAGER)

@@ -21,6 +21,7 @@ import java.util.List;
 @Table(name = "GameContents")
 public class GameContent extends AbstractPersistable<Long> {
 
+    private String nanoId;
     private LocalDateTime created_at;
     @OneToMany(targetEntity = UsableItem.class)
     private List<UsableItem> itemsInGame;

@@ -4,6 +4,7 @@ import _21224bhifPos1CsesiereiBlocketWiki.Application;
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.Surname;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.Dtos.SurnameDto;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.MutateCommands.MutateSurnameCommand;
+import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.NanoIdFactory;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.TemporalValueFactory;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.SurnameService;
 import _21224bhifPos1CsesiereiBlocketWiki.persistence.SurnameRepository;
@@ -100,7 +101,7 @@ public class SurnameServiceTest {
     }
 
     private SurnameDto mockUpSurname(String name){
-        return new SurnameDto(name,temporalValueFactory.create_datetimestamp());
+        return new SurnameDto(new NanoIdFactory().randomNanoId(12),name,temporalValueFactory.create_datetimestamp());
     }
 
     private SurnameDto createSurname(){

@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Builder
 @Data
 public class MutateBlockCommand {
-
+    private String nanoId;
     private LocalDateTime created_at;
     private int blockDurability;
     private String name;

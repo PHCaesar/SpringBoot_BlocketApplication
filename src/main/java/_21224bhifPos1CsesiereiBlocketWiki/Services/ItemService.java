@@ -4,6 +4,7 @@ import _21224bhifPos1CsesiereiBlocketWiki.Domain.Item;
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.UsableItem;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.Dtos.UsableItemDto;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.MutateCommands.MutateItemCommand;
+import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.NanoIdFactory;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Interfaces.IItemService;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.exceptions.UniversalExceptionStatements;
 import _21224bhifPos1CsesiereiBlocketWiki.persistence.ItemRepository;
@@ -42,6 +43,7 @@ public class ItemService implements IItemService {
         }
         catch (EmptyResultDataAccessException exception){
             UsableItem itemInstance = createInstanceByDTO(item);
+            itemInstance.setNanoId(new NanoIdFactory().randomNanoId(16));
             itemRepository.insert(itemInstance);
             return itemInstance;
         }

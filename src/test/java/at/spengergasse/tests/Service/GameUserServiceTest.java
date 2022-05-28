@@ -4,6 +4,7 @@ import _21224bhifPos1CsesiereiBlocketWiki.Application;
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.*;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.Dtos.GameUserDto;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.MutateCommands.MutateUserCommand;
+import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.NanoIdFactory;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.TemporalValueFactory;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.TokenService;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.UserService;
@@ -122,7 +123,7 @@ public class GameUserServiceTest {
 
 
     private GameUserDto mockUpUser(LocalDate birthDate, String username, String firstname){
-        return new GameUserDto(temporalValueFactory.create_datetimestamp(),null,firstname,"",username,birthDate, tokenService.createTokenFor(temporalValueFactory.create_datetimestamp()));
+        return new GameUserDto(new NanoIdFactory().randomNanoId(12),temporalValueFactory.create_datetimestamp(),null,firstname,"",username,birthDate, tokenService.createTokenFor(temporalValueFactory.create_datetimestamp()));
     }
 
     private GameUserDto createUser(){

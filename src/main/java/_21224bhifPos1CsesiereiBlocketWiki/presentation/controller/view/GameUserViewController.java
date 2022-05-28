@@ -36,7 +36,7 @@ public class GameUserViewController {
 
     @PostMapping({"/register",UniversalPathVariables.PATH_INDEX})
     public String postRegistration(@ModelAttribute MutateUserCommand userCommand,Model model){
-        userService.insertUser(new GameUserDto(null,new ArrayList<>(), userCommand.getFirstname(), userCommand.getName(),userCommand.getUsername(),userCommand.getBirthDate(),""));
+        userService.insertUser(new GameUserDto("",null,new ArrayList<>(), userCommand.getFirstname(), userCommand.getName(),userCommand.getUsername(),userCommand.getBirthDate(),""));
         return "/User/login";
     }
 
@@ -50,7 +50,7 @@ public class GameUserViewController {
 
     @GetMapping({"/login",UniversalPathVariables.PATH_INDEX})
     public String logIn(@ModelAttribute MutateUserCommand userCommand,Model model){
-            GameUser u =userService.getUserByName(new GameUserDto(null,new ArrayList<>(), userCommand.getFirstname(), userCommand.getName(),userCommand.getUsername(),userCommand.getBirthDate(),""));
+            GameUser u =userService.getUserByName(new GameUserDto("",null,new ArrayList<>(), userCommand.getFirstname(), userCommand.getName(),userCommand.getUsername(),userCommand.getBirthDate(),""));
 
             if(u==null){
                 //Throwback to login (NO User with username "name" found

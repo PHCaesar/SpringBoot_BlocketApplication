@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor @AllArgsConstructor
 @Builder
 public class Surname extends AbstractPersistable<Long> {
+    private String nanoId;
     private LocalDateTime created_at;
     private String name;
     private String token;

@@ -10,7 +10,7 @@ import java.util.List;
 @Builder
 @Data
 public class MutateGameContentCommand {
-
+    private String nanoId;
     private LocalDateTime created_at;
     private List<UsableItem> itemsInGame;
     private List<Block> blocksInGame;

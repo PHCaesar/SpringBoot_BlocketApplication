@@ -46,6 +46,6 @@ public class MobController {
     @PostMapping({"",UniversalPathVariables.PATH_INDEX})
     public HttpEntity<Mob> postBlocks(@RequestBody MutateMobCommand mutateMobCommand){
         return ResponseEntity.ok(mobService.insertMob(
-                new MobDto(mutateMobCommand.getName(), mutateMobCommand.getDrops(), mutateMobCommand.getType(),null, "")));
+                new MobDto("",mutateMobCommand.getName(), mutateMobCommand.getDrops(), mutateMobCommand.getType(),null, "")));
     }
 }

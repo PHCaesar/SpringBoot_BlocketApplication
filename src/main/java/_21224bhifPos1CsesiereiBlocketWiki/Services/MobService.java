@@ -4,6 +4,7 @@ import _21224bhifPos1CsesiereiBlocketWiki.Domain.Block;
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.Mob;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.Dtos.MobDto;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.MutateCommands.MutateMobCommand;
+import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.NanoIdFactory;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Interfaces.IMobService;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.exceptions.UniversalExceptionStatements;
 import _21224bhifPos1CsesiereiBlocketWiki.persistence.MobRepository;
@@ -46,6 +47,7 @@ public class MobService implements IMobService {
 
         } catch(EmptyResultDataAccessException exception) {
             Mob mobInstance = createInstanceByDTO(mob);
+            mobInstance.setNanoId(new NanoIdFactory().randomNanoId(16));
             mobRepository.insert(mobInstance);
             log.info("insertMob {} mobInstance", mobInstance);
             return mobInstance;

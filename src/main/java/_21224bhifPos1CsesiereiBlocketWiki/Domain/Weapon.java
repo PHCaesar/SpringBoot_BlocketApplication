@@ -19,8 +19,8 @@ import java.util.function.Predicate;
 @NoArgsConstructor @AllArgsConstructor
 @Table(name = "Weapons")
 @Builder
-public class Weapon extends Item
-{
+public class Weapon extends Item {
+    private String nanoId;
     private LocalDateTime created_at;
     private String description;
     private int damage;

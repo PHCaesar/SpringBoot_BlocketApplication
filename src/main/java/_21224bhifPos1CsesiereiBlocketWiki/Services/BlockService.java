@@ -4,6 +4,7 @@ import _21224bhifPos1CsesiereiBlocketWiki.Domain.*;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.Dtos.BlockDto;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.MutateCommands.MutateBlockCommand;
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.Block;
+import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.NanoIdFactory;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.TemporalValueFactory;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Interfaces.IBlockService;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.exceptions.UniversalExceptionStatements;
@@ -35,7 +36,7 @@ public class BlockService implements IBlockService {
 
     // GET
 
-    public List<Block> getBlocksByDurability(int durability){
+    public List<Block> getBlocksByDurability(int durability) {
 
         if(blockRepository.findByBlocksDurability(durability).size()>0)
         {
@@ -61,6 +62,7 @@ public class BlockService implements IBlockService {
         checkParameterInput(block);
         if(blockRepository.findByDTO(block)==null){
             Block blockInstance = createInstanceByDTO(block);
+            blockInstance.setNanoId(new NanoIdFactory().randomNanoId(16));
             blockRepository.insert(blockInstance);
             log.info("InsertBlock {} blockInstance", blockInstance);
             return blockInstance;
@@ -103,7 +105,7 @@ public class BlockService implements IBlockService {
     }
 
 
-    public void checkParameterInput(BlockDto block){
+    public void checkParameterInput(BlockDto block) {
 
         Objects.requireNonNull(block);
 

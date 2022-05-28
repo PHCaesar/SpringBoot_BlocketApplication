@@ -31,7 +31,7 @@ public class MobViewController {
 
     @PostMapping({"/createMob",UniversalPathVariables.PATH_INDEX})
     public String createMob(@PathVariable MutateMobCommand mob,Model model){
-        mobService.insertMob(new MobDto(mob.getName(),mob.getDrops(),mob.getType(),null,""));
+        mobService.insertMob(new MobDto("",mob.getName(),mob.getDrops(),mob.getType(),null,""));
 
         prepareModel(model);
         return "/Mob/index";
@@ -39,7 +39,7 @@ public class MobViewController {
 
     @PostMapping({"/update",UniversalPathVariables.PATH_INDEX})
     public String updateMob(@PathVariable MutateMobCommand mob,Model model){
-        mobService.updateMob(new MobDto(mob.getName(),mob.getDrops(),mob.getType(),null,""));
+        mobService.updateMob(new MobDto("",mob.getName(),mob.getDrops(),mob.getType(),null,""));
 
         prepareModel(model);
         return "/Mob/index";

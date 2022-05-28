@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @Builder
 @Data
 public class MutateItemCommand {
+    private String nanoId;
     private LocalDateTime created_at;
     private String name;
     private int size;

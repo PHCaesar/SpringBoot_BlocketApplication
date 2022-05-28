@@ -4,6 +4,7 @@ import _21224bhifPos1CsesiereiBlocketWiki.Application;
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.NonPlayerCharacter;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.Dtos.NonPlayerCharacterDto;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.MutateCommands.MutateNonPlayerCharacterCommand;
+import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.NanoIdFactory;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.TemporalValueFactory;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.NonPlayerCharacterService;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.TokenService;
@@ -67,7 +68,7 @@ public class NonPlayerCharacterServiceTest {
     }
 
     private NonPlayerCharacterDto mockUpNonPlayerCharacter(String name, float health){
-        return new NonPlayerCharacterDto(name,health,null,temporalValueFactory.create_datetimestamp(),tokenService.createTokenFor(temporalValueFactory.create_datetimestamp()));
+        return new NonPlayerCharacterDto(new NanoIdFactory().randomNanoId(12),name,health,null,temporalValueFactory.create_datetimestamp(),tokenService.createTokenFor(temporalValueFactory.create_datetimestamp()));
     }
 
     private NonPlayerCharacterDto createNonPlayerCharacter(){

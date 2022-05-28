@@ -126,7 +126,7 @@ public class MobServiceTest {
     }
 
     private MobDto mockUpMob(String name, MobType type){
-        return new MobDto(name,null,type,temporalValueFactory.create_datetimestamp(),tokenService.createTokenFor(temporalValueFactory.create_datetimestamp()));
+        return new MobDto(null,name,null,type,temporalValueFactory.create_datetimestamp(),tokenService.createTokenFor(temporalValueFactory.create_datetimestamp()));
     }
 
     private Mob createMob(){

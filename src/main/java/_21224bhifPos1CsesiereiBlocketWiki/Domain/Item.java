@@ -13,6 +13,7 @@ import javax.persistence.*;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Data
 public abstract class Item extends AbstractPersistable<Long> {
+    private String nanoId;
     private String name;
     private int size;
     //@ManyToOne(cascade = CascadeType.REFRESH)

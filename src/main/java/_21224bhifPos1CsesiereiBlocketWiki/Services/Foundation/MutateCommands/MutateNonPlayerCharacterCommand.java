@@ -11,6 +11,7 @@ import java.util.List;
 @Builder
 @Data
 public class MutateNonPlayerCharacterCommand {
+    private String nanoId;
     private LocalDateTime created_at;
     private String name;
     private float health;

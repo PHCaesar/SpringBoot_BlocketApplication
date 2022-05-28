@@ -22,7 +22,7 @@ import java.util.List;
 @NoArgsConstructor @AllArgsConstructor
 @Table(name = "NonPlayerCharacters")
 public class NonPlayerCharacter extends AbstractPersistable<Long> {
-
+    private String nanoId;
     private LocalDateTime created_at;
     private String name;
     private float health;
