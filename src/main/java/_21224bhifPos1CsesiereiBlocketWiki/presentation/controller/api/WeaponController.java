@@ -1,4 +1,4 @@
-package _21224bhifPos1CsesiereiBlocketWiki.presentation.controller;
+package _21224bhifPos1CsesiereiBlocketWiki.presentation.controller.api;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;

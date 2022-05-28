@@ -13,6 +13,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Objects;
 
 @Log4j2
@@ -25,6 +26,13 @@ public class WeaponService implements IWeaponService {
     //GET
     public Weapon getByName(String name) {
         var realWep = weaponRepository.findByName(name);
+        log.info("Found {} realWep", realWep);
+
+        return realWep;
+    }
+
+    public List<Weapon> getAll() {
+        var realWep = weaponRepository.findAll();
         log.info("Found {} realWep", realWep);
 
         return realWep;

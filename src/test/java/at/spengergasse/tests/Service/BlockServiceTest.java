@@ -6,6 +6,7 @@ import _21224bhifPos1CsesiereiBlocketWiki.Services.BlockService;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.Dtos.BlockDto;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.TemporalValueFactory;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Interfaces.IBlockService;
+import _21224bhifPos1CsesiereiBlocketWiki.Services.TokenService;
 import _21224bhifPos1CsesiereiBlocketWiki.persistence.BlockRepository;
 import at.spengergasse.tests.MockUp;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,18 +32,20 @@ public class BlockServiceTest {
     private BlockRepository blockRepository;
     @Autowired
     private TemporalValueFactory temporalValueFactory;
+    @Autowired
+    private TokenService tokenService;
     private BlockService blockService;
 
     @BeforeEach
     void setup(){
         assertNotNull(blockRepository);
-        blockService = new BlockService(blockRepository);
+        blockService = new BlockService(blockRepository,temporalValueFactory,tokenService);
     }
 
     @Test
     void ensureBlockServiceWorksProperlyWithDTO(){
         //given
-        BlockDto block = MockUp.mockUpBlockDTO(1,"HerbertBlock","Herbert",1,temporalValueFactory.create_datetimestamp());
+        BlockDto block = MockUp.mockUpBlockDTO(1,"HerbertBlock","Herbert",1);
         //when
         Block addedReference = blockService.createInstanceByDTO(block);
         //assert
@@ -53,7 +56,7 @@ public class BlockServiceTest {
 
     @Test
     void ensureBlockServiceFindsMutateBlockCommand(){
-        BlockDto block = MockUp.mockUpBlockDTO(1,"HerbertBlock","Herbert",1,temporalValueFactory.create_datetimestamp());
+        BlockDto block = MockUp.mockUpBlockDTO(1,"HerbertBlock","Herbert",1);
         blockService.createInstanceByDTO(block);
         List<Block> addedReference = blockService.getBlock(block);
         assertNotNull(addedReference);
@@ -62,7 +65,7 @@ public class BlockServiceTest {
 
     @Test
     void ensureBlockServiceDeletesBlock(){
-        BlockDto block = MockUp.mockUpBlockDTO(1,"HerbertBlock","Herbert",1,temporalValueFactory.create_datetimestamp());
+        BlockDto block = MockUp.mockUpBlockDTO(1,"HerbertBlock","Herbert",1);
         blockService.createInstanceByDTO(block);
         blockService.deleteBlock(block);
         List<Block> addedReference = blockService.getBlock(block);
@@ -71,7 +74,7 @@ public class BlockServiceTest {
 
     @Test
     void ensureBlockServiceDeletesNonNoExistingBlock(){
-        BlockDto block = MockUp.mockUpBlockDTO(1,"HerbertBlock","Herbert",1,temporalValueFactory.create_datetimestamp());
+        BlockDto block = MockUp.mockUpBlockDTO(1,"HerbertBlock","Herbert",1);
         assertThrows(IllegalArgumentException.class,()->blockService.deleteBlock(block));
    }
 
@@ -82,28 +85,28 @@ public class BlockServiceTest {
 
     @Test
     void ensureBlockServiceGetsBlocksByDurability(){
-        BlockDto block = MockUp.mockUpBlockDTO(1,"HerbertBlock","Herbert",1,temporalValueFactory.create_datetimestamp());
+        BlockDto block = MockUp.mockUpBlockDTO(1,"HerbertBlock","Herbert",1);
         Block b =blockService.createInstanceByDTO(block);
         assertEquals(blockService.getBlocksByDurability(block.blockDurability()).get(0),b);
     }
 
     @Test
     void ensureBlockServiceInsertsBlock(){
-        BlockDto block = MockUp.mockUpBlockDTO(1,"HerbertBlock","Herbert",1,temporalValueFactory.create_datetimestamp());
+        BlockDto block = MockUp.mockUpBlockDTO(1,"HerbertBlock","Herbert",1);
         Block b =blockService.insertBlock(block);
         assertEquals(blockService.getAllBlocks().get(0),b);
     }
 
     @Test
     void ensureBlockServiceInsertsNoDuplicateBlock(){
-        BlockDto block = MockUp.mockUpBlockDTO(1,"HerbertBlock","Herbert",1,temporalValueFactory.create_datetimestamp());
+        BlockDto block = MockUp.mockUpBlockDTO(1,"HerbertBlock","Herbert",1);
         Block b =blockService.insertBlock(block);
         assertThrows(IllegalArgumentException.class,()->blockService.insertBlock(block));
     }
 
     @Test
     void ensureBlockServiceUpdatesBlock(){
-        BlockDto block = MockUp.mockUpBlockDTO(1,"HerbertBlock","Herbert",1,temporalValueFactory.create_datetimestamp());
+        BlockDto block = MockUp.mockUpBlockDTO(1,"HerbertBlock","Herbert",1);
         blockService.insertBlock(block);
         //Change Block parameters
         blockService.updateBlock(block);
@@ -113,15 +116,15 @@ public class BlockServiceTest {
 
     @Test
     void ensureBlockServiceUpdatesNoNonExistingBlock(){
-        BlockDto block = MockUp.mockUpBlockDTO(1,"HerbertBlock","Herbert",1,temporalValueFactory.create_datetimestamp());
+        BlockDto block = MockUp.mockUpBlockDTO(1,"HerbertBlock","Herbert",1);
         assertThrows(IllegalArgumentException.class,()->blockService.updateBlock(block));
     }
 
     @Test
     void ensureBlockServiceDeletesAllBlocks(){
-        BlockDto block = MockUp.mockUpBlockDTO(1,"HerbertBlock","Herbert",1,temporalValueFactory.create_datetimestamp());
+        BlockDto block = MockUp.mockUpBlockDTO(1,"HerbertBlock","Herbert",1);
         blockService.insertBlock(block);
-        blockService.insertBlock(MockUp.mockUpBlockDTO(10,"JAMESBlock","James",3,temporalValueFactory.create_datetimestamp()));
+        blockService.insertBlock(MockUp.mockUpBlockDTO(10,"JAMESBlock","James",3));
         assertEquals(blockService.getAllBlocks().size(),2);
         blockService.deleteAll();
         assertEquals(blockService.getAllBlocks().size(),0);
@@ -129,13 +132,13 @@ public class BlockServiceTest {
 
     @Test
     void ensureBlockServiceChecksParameterInputName(){
-        BlockDto block = MockUp.mockUpBlockDTO(1,"HerbertBlock","",1,temporalValueFactory.create_datetimestamp());
+        BlockDto block = MockUp.mockUpBlockDTO(1,"HerbertBlock","",1);
         assertThrows(IllegalArgumentException.class,()->blockService.checkParameterInput(block));
     }
 
     @Test
     void ensureBlockServiceChecksParameterInputSize(){
-        BlockDto block = MockUp.mockUpBlockDTO(1,"HerbertBlock","sdfsdf",0,temporalValueFactory.create_datetimestamp());
+        BlockDto block = MockUp.mockUpBlockDTO(1,"HerbertBlock","sdfsdf",0);
         assertThrows(IllegalArgumentException.class,()->blockService.checkParameterInput(block));
     }
 

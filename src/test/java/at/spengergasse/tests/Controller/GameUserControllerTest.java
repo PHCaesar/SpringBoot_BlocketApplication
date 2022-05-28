@@ -4,7 +4,7 @@ import _21224bhifPos1CsesiereiBlocketWiki.Application;
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.GameUser;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.MutateCommands.MutateUserCommand;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.TemporalValueFactory;
-import _21224bhifPos1CsesiereiBlocketWiki.presentation.controller.GameUserController;
+import _21224bhifPos1CsesiereiBlocketWiki.presentation.controller.api.GameUserController;
 import at.spengergasse.tests.MockUp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -49,7 +49,6 @@ public class GameUserControllerTest {
                 .birthDate(basicDataUser.getBirthDate())
                 .username(basicDataUser.getUsername())
                 .firstname(basicDataUser.getFirstname())
-                .created_at(basicDataUser.getCreated_at())
                 .surnames(basicDataUser.getSurnames())
                 .token(basicDataUser.getToken()).build()).getBody();
 
@@ -66,7 +65,6 @@ public class GameUserControllerTest {
                 .birthDate(basicDataUser.getBirthDate())
                 .username(basicDataUser.getUsername())
                 .firstname(basicDataUser.getFirstname())
-                .created_at(basicDataUser.getCreated_at())
                 .surnames(basicDataUser.getSurnames())
                 .token(basicDataUser.getToken()).build()).getBody();
 
@@ -81,7 +79,6 @@ public class GameUserControllerTest {
                 .birthDate(basicDataUser.getBirthDate())
                 .username(basicDataUser.getUsername())
                 .firstname(basicDataUser.getFirstname())
-                .created_at(basicDataUser.getCreated_at())
                 .surnames(basicDataUser.getSurnames())
                 .token(basicDataUser.getToken()).build()).getBody();
         assertEquals(postetUser,userController.getUsers().getBody().get(0));
@@ -95,7 +92,6 @@ public class GameUserControllerTest {
                 .birthDate(basicDataUser.getBirthDate())
                 .username(basicDataUser.getUsername())
                 .firstname(basicDataUser.getFirstname())
-                .created_at(basicDataUser.getCreated_at())
                 .surnames(basicDataUser.getSurnames())
                 .token(basicDataUser.getToken()).build()).getBody();
 

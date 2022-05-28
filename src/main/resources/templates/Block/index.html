@@ -1,0 +1,87 @@
+
+<page errorPage="error.html"/>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Block</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<!--TODO : REMOVING Blocks-->
+
+<body>
+  <div>
+
+      <nav class="navbar navbar-inverse">
+          <div class="container-fluid">
+              <div class="navbar-header">
+                  <a class="navbar-brand" href="/templates/index.html">BlocketWiki</a>
+              </div>
+              <ul class="nav navbar-nav">
+                  <li><a href="/GameContent">Home</a></li>
+                  <li class="active"><a href="/Block">Blocks</a></li>
+                  <li><a href="/Weapon">Weapons</a></li>
+                  <li><a href="/NPC">NPCs</a></li>
+                  <li><a href="/Mob">Mobs</a></li>
+              </ul>
+          </div>
+      </nav>
+
+      <div class="container">
+      <h1 class="jumbotron" style="background: none" th:text="#{app.block.title}"></h1>
+      <hr/>
+      <form method="post" action="/Block/createBlock" th:object="${block}">
+          <input style="width:20%" type="text" name="name" th:placeholder="#{app.block.name}">
+          <input style="width:20%" type="text" name="blockName" th:placeholder="#{app.block.blockName}">
+          <input style="width:20%" type="text" name="size" th:placeholder="#{app.block.size}">
+          <input style="width:20%" type="text" name="blockDurability" th:placeholder="#{app.block.durability}">
+          <input type="submit" value="Create Block">
+      </form>
+
+      <hr/>
+
+      <!--Works only if Data exists-->
+      <table class="block" style="width:100%">
+          <thead>
+          <tr>
+              <th style="width:20%" th:text="#{app.block.name}"></th>
+              <th style="width:20%" th:text="#{app.block.blockName}">Block-Name</th>
+              <th style="width:20%" th:text="#{app.block.size}">Size</th>
+              <th style="width:20%" th:text="#{app.block.durability}">Durability</th>
+              <th style="width:20%"></th>
+          </tr>
+          <th:block th:each="blocki : ${blocks}">
+              <tr>
+                  <form method="post" action="/Block/update" th:object="${blocki}">
+                  <td>
+                      <input th:value="${blocki.getName()}" name="name">
+                  </td>
+                  <td>
+                      <input th:value="${blocki.blockname}" name="blockName">
+                  </td>
+                  <td>
+                      <input th:value="${blocki.size}" name="size" >
+                  </td>
+                  <td>
+                      <input th:value="${blocki.blockDurability}" name="blockDurability" >
+                  </td>
+                  <td>
+                      <input type="submit" value="Update" class="btn btn-primary">
+                  </td>
+                  </form>
+              </tr>
+          </th:block>
+          </thead>
+      </table>
+          <br><br>
+      <p th:text="${noInput}"/>
+          <br><br>
+      <a href="/" class="btn btn-success">Return to the Main Page</a>
+
+      </div>
+  </div>
+</body>
+</html>

@@ -11,6 +11,7 @@ import _21224bhifPos1CsesiereiBlocketWiki.persistence.BlockRepository;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.NoResultException;
@@ -26,6 +27,11 @@ public class BlockService implements IBlockService {
     // Parameterized Exception output
 
     private final BlockRepository blockRepository;
+
+    @Autowired
+    private final TemporalValueFactory temporalValueFactory;
+    @Autowired
+    private final TokenService tokenService;
 
     // GET
 
@@ -116,7 +122,8 @@ public class BlockService implements IBlockService {
 
         Block blockInstance = Block.builder()
                 .blockname(block.blockname())
-                .created_at(block.created_at())
+                .created_at(temporalValueFactory.create_datetimestamp())
+                .token(tokenService.createTokenFor(temporalValueFactory.create_datetimestamp(),block.name()))
                 .size(block.size())
                 .name(block.name())
                 .blockDurability(block.blockDurability())

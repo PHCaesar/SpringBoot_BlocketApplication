@@ -10,8 +10,8 @@ import java.util.List;
 public class MockUp {
 
     ///BLOCK
-    public static BlockDto mockUpBlockDTO(int durability, String blockname, String name, int size, LocalDateTime dateTime){
-        return new BlockDto(durability,name,size,dateTime,blockname);
+    public static BlockDto mockUpBlockDTO(int durability, String blockname, String name, int size){
+        return new BlockDto(durability,name,size,blockname);
     }
 
     public static Block mockUpBlock(String name,int blockDur,String blockName,int size,LocalDateTime localDateTime,String token){

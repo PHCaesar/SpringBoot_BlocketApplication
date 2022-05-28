@@ -1,4 +1,4 @@
-POST http://localhost:7777/api/block
+POST http://localhost:7000/api/Blocks
 Content-Type: application/json
 Accept: application/json
 
@@ -9,7 +9,7 @@ Accept: application/json
   "size" : 1
   }
 ###
-POST http://localhost:7777/api/block
+POST http://localhost:7000/api/Blocks
 Content-Type: application/json
 Accept: application/json
 
@@ -21,6 +21,6 @@ Accept: application/json
 }
 ###
 
-GET http://localhost:7777/api/block/
+GET http://localhost:7000/api/Blocks/
 ###
-GET http://localhost:7777/api/block/1
+GET http://localhost:7000/api/Blocks/1

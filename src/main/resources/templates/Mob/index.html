@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mob</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<!--TODO : REMOVING Mobs-->
+
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/templates/index.html">BlocketWiki</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="/GameContent">Home</a></li>
+            <li><a href="/Block">Blocks</a></li>
+            <li><a href="/Weapon">Weapons</a></li>
+            <li><a href="/NPC">NPCs</a></li>
+            <li class="active"><a href="/Mob">Mobs</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <h1 class="jumbotron" style="background: none" th:text="#{app.mob.title}"></h1>
+
+    <form method="post" action="/Mob/createMob" th:object="${mob}">
+        <input type="text" name="name" >
+        <select typeof="MobType" name="type">
+            <option th:value="${aggressive}" th:text="${aggressive}"></option>
+            <option th:value="${friendly}" th:text="${friendly}"></option>
+            <option th:value="${passive}" th:text="${passive}"></option>
+        </select>
+        <input type="submit" value="Create Mob">
+    </form>
+
+    <hr/>
+
+    <!--Works only if Data exists-->
+    <table class="block" style="width:100%">
+        <thead>
+        <tr>
+            <th style="width:20%" th:text="#{app.mob.name}"></th>
+            <th style="width:20%" th:text="#{app.mob.type}"></th>
+            <th style="width:20%"></th>
+        </tr>
+        <th:mob th:each="mobData : ${mobs}">
+            <tr>
+                <form method="post" action="/Mob/update">
+                    <td><input type="text" th:value="${mobData.getName()}" name="name" disabled></td>
+                    <td><select th:value="${mobData.getType()}" name="type">
+                        <option th:value="${aggressive}" th:text="${aggressive}"></option>
+                        <option th:value="${friendly}" th:text="${friendly}"></option>
+                        <option th:value="${passive}" th:text="${passive}"></option>
+                    </select></td>
+                    <td><input type="submit" value="Update"></td>
+                </form>
+            </tr>
+        </th:mob>
+        </thead>
+    </table>
+    <br><br>
+    <p th:text="${noInput}"/>
+    <br><br>
+    <a href="/" class="btn btn-success">Return to the Main Page</a>
+</div>
+</body>
+</html>

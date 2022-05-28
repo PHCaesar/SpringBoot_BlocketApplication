@@ -1,7 +1,7 @@
-package _21224bhifPos1CsesiereiBlocketWiki.presentation.controller;
+package _21224bhifPos1CsesiereiBlocketWiki.presentation.controller.api;
 
 
-import _21224bhifPos1CsesiereiBlocketWiki.Domain.NonPlayerCharacter;
+import _21224bhifPos1CsesiereiBlocketWiki.Services.NonPlayerCharacterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,5 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(NonPlayerCharacterController.BASE_URL)
 public class NonPlayerCharacterController {
-    public static final String BASE_URL = "/nonplayercharacter";
+
+    public static final String BASE_URL = "api/nonplayercharacter";
+
+    public final NonPlayerCharacterService nonPlayerCharacterService;
 }

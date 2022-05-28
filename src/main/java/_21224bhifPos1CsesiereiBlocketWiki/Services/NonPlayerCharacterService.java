@@ -10,6 +10,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Log4j2
 @RequiredArgsConstructor
@@ -22,6 +23,12 @@ public class NonPlayerCharacterService implements INonPlayerCharacterService {
     // GET
     public NonPlayerCharacter getNonPlayerCharacterByName(String name){
         var realNPC = nonPlayerCharacterRepository.findByName(name);
+        log.info("Found {} realNPC", realNPC);
+        return realNPC;
+    }
+
+    public List<NonPlayerCharacter> getAllNonPlayerCharacters(){
+        var realNPC = nonPlayerCharacterRepository.findAll();
         log.info("Found {} realNPC", realNPC);
         return realNPC;
     }

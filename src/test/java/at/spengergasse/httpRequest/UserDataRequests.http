@@ -1,7 +1,7 @@
 
-GET http://localhost:7777/api/user/
+GET http://localhost:7000/api/user/
 ###
-POST http://localhost:7777/api/user/
+POST http://localhost:7000/api/user/
 Content-Type: application/json
 Accept: application/json
 

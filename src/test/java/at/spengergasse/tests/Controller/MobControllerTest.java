@@ -3,11 +3,9 @@ package at.spengergasse.tests.Controller;
 import _21224bhifPos1CsesiereiBlocketWiki.Application;
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.Mob;
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.MobType;
-import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.Dtos.MobDto;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.MutateCommands.MutateMobCommand;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.TemporalValueFactory;
-import _21224bhifPos1CsesiereiBlocketWiki.presentation.controller.GameUserController;
-import _21224bhifPos1CsesiereiBlocketWiki.presentation.controller.MobController;
+import _21224bhifPos1CsesiereiBlocketWiki.presentation.controller.api.MobController;
 import at.spengergasse.tests.MockUp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -48,8 +46,6 @@ public class MobControllerTest {
         Mob m =mobController.postBlocks(MutateMobCommand.builder()
                 .name(mobData.getName())
                 .drops(mobData.getDrops())
-                .created_at(mobData.getCreated_at())
-                .token(mobData.getToken())
                 .type(mobData.getType())
                 .build()).getBody();
         assertEquals(m.getName(),mobData.getName());
@@ -62,8 +58,6 @@ public class MobControllerTest {
         Mob m =mobController.postBlocks(MutateMobCommand.builder()
                 .name(mobData.getName())
                 .drops(mobData.getDrops())
-                .created_at(mobData.getCreated_at())
-                .token(mobData.getToken())
                 .type(mobData.getType())
                 .build()).getBody();
         assertEquals(m.getName(),mobData.getName());

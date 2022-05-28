@@ -1,6 +1,6 @@
-GET http://localhost:7777/api/mob
+GET http://localhost:7000/api/mob
 ###
-POST http://localhost:7777/api/mob
+POST http://localhost:7000/api/mob
 Content-Type: application/json
 Accept: application/json
 

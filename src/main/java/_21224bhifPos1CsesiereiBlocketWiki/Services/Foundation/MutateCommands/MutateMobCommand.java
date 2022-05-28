@@ -10,9 +10,7 @@ import java.util.List;
 @Builder
 @Data
 public class MutateMobCommand {
-    private LocalDateTime created_at;
     private String name;
     private List<UsableItem> drops;
     private MobType type;
-    private String token;
 }

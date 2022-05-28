@@ -1,4 +1,4 @@
-package _21224bhifPos1CsesiereiBlocketWiki.presentation.controller;
+package _21224bhifPos1CsesiereiBlocketWiki.presentation.controller.api;
 
 
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.GameUser;
@@ -13,8 +13,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -29,8 +27,8 @@ public class GameUserController {
     @Autowired
     private TokenService tokenService;
 
-    public static final String BASE_URL = "/api/user";
-    public static final String PATH_VAR_DURABILITY ="/{durability}";
+    public static final String BASE_URL = "api/user";
+    public static final String PATH_VAR_NAME ="/{name}";
 
     @GetMapping({"",UniversalPathVariables.PATH_INDEX})
     public HttpEntity<List<GameUser>> getUsers(){
@@ -39,7 +37,7 @@ public class GameUserController {
 
     }
 
-    @GetMapping({"",PATH_VAR_DURABILITY})
+    @GetMapping({"", PATH_VAR_NAME})
     public HttpEntity<GameUser> getUserByNames(@PathVariable String firstname, String name,String username){ //Param muss String sein
         GameUser users = userService.getUserByName(new GameUserDto(null,null,firstname,name,username, null,""));
         return ResponseEntity.ok(users);

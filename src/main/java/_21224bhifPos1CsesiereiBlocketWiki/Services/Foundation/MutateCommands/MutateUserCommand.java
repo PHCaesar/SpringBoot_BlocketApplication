@@ -12,7 +12,6 @@ import java.util.List;
 @Builder
 @Data
 public class MutateUserCommand {
-    private LocalDateTime created_at;
     private List<Surname> surnames;
     private String firstname,name,username;
     private LocalDate birthDate;

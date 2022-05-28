@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script></head>
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/" th:text="#{app.title}"></a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="/" th:text="#{app.home}"></a></li>
+            <li class="active"><a href="/Login" th:text="#{app.login}"></a></li>
+            <li><a href="/Login/register" th:text="#{app.register}"></a></li>
+            <li><a href="#" th:text="#{app.about}"></a></li>
+        </ul>
+    </div>
+</nav>
+
+    <div class="container">
+    <h1 class="jumbotron" style="background: none" th:text="#{app.login}"></h1>
+    <table>
+        <thead>
+        <tr>
+            <th style="width:30%" th:text="#{app.user.firstname}"></th>
+            <th style="width:30%" th:text="#{app.user.username}"></th>
+            <th style="width:30%"></th>
+        </tr>
+        <tr>
+            <form method="get" action="/Login/login" th:object="${user}">
+                <th><input type="text" name="firstname" th:placeholder="#{app.user.firstname}"></th>
+                <th><input type="text" name="username" th:placeholder="#{app.user.username}"></th>
+                <th><input type="submit" value="Login"></th>
+            </form>
+        </tr>
+        </thead>
+    </table>
+        <p th:text="${noInput}"/>
+
+        <br>
+        <br>
+    <a href="Login/register"><button class="btn btn-success" th:text="#{app.register}"></button></a>
+    </div>
+</body>
+</html>

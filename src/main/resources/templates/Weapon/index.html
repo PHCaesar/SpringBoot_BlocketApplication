@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Weapon</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/templates/index.html">BlocketWiki</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="/GameContent">Home</a></li>
+            <li><a href="/Block">Blocks</a></li>
+            <li><a href="/Weapon">Weapons</a></li>
+            <li class="active"><a href="/NPC">NPCs</a></li>
+            <li><a href="/Mob">Mobs</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <h1 class="jumbotron" style="background: none" th:text="#{app.weapon.title}"></h1>
+
+    <hr/>
+        <form method="post" action="/Weapon/insert" th:object="${weapon}">
+            <input style="width:20%" type="text" name="name" th:placeholder="#{app.weapon.name}">
+            <input style="width:20%" type="text" name="classification" th:placeholder="#{app.weapon.classification}">
+            <input style="width:20%" type="text" name="description" th:placeholder="#{app.weapon.description}">
+            <input style="width:20%" type="text" name="damage" th:placeholder="#{app.weapon.damage}">
+            <input style="width:20%" type="text" name="size" th:placeholder="#{app.weapon.size}">
+            <input type="submit" value="Create Block">
+        </form>
+
+    <hr/>
+    <!--Table of NPCs-->
+    <table class="block" style="width:100%">
+        <thead>
+        <tr>
+            <th style="width:20%" th:text="#{app.weapon.name}"></th>
+            <th style="width:20%" th:text="#{app.weapon.classification}"></th>
+            <th style="width:20%" th:text="#{app.weapon.description}"></th>
+            <th style="width:20%" th:text="#{app.weapon.damage}"></th>
+            <th style="width:20%" th:text="#{app.weapon.size}"></th>
+            <th style="width:20%"></th>
+        </tr>
+        <th:weapon th:each="weapon : ${weapons}">
+            <tr>
+                <form method="post" action="/Weapon/update">
+                    <td><input type="text" th:value="${weapon.getName()}" name="name" disabled></td>
+                    <td><input type="text" th:value="${weapon.getClassification()}" name="classification" disabled></td>
+                    <td><input type="text" th:value="${weapon.getDescription()}" name="description"></td>
+                    <td><input type="text" th:value="${weapon.getDamage()}" name="damage"></td>
+                    <td><input type="text" th:value="${weapon.getSize()}" name="size"></td>
+                    <td><input type="submit" value="Update"></td>
+                </form>
+            </tr>
+        </th:weapon>
+        </thead>
+    </table>
+</div>
+</body>
+</html>

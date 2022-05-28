@@ -1,9 +1,7 @@
-package _21224bhifPos1CsesiereiBlocketWiki.presentation.controller;
+package _21224bhifPos1CsesiereiBlocketWiki.presentation.controller.api;
 
 
 import _21224bhifPos1CsesiereiBlocketWiki.Domain.Mob;
-import _21224bhifPos1CsesiereiBlocketWiki.Domain.MobType;
-import _21224bhifPos1CsesiereiBlocketWiki.Domain.UsableItem;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.Dtos.MobDto;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.MutateCommands.MutateMobCommand;
 import _21224bhifPos1CsesiereiBlocketWiki.Services.Foundation.TemporalValueFactory;
@@ -15,7 +13,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -49,6 +46,6 @@ public class MobController {
     @PostMapping({"",UniversalPathVariables.PATH_INDEX})
     public HttpEntity<Mob> postBlocks(@RequestBody MutateMobCommand mutateMobCommand){
         return ResponseEntity.ok(mobService.insertMob(
-                new MobDto(mutateMobCommand.getName(), mutateMobCommand.getDrops(), mutateMobCommand.getType(),mutateMobCommand.getCreated_at(), mutateMobCommand.getToken())));
+                new MobDto(mutateMobCommand.getName(), mutateMobCommand.getDrops(), mutateMobCommand.getType(),null, "")));
     }
 }

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GameContent</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">BlocketWiki</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/GameContent">Home</a></li>
+                <li><a href="/Block">Blocks</a></li>
+                <li><a href="/Weapon">Weapons</a></li>
+                <li><a href="/NPC">NPCs</a></li>
+                <li><a href="/Mob">Mobs</a></li>
+            </ul>
+        </div>
+    </nav>
+
+<div class="container">
+    <h1 class="jumbotron" style="background: none" th:text="#{app.welcome}"></h1>
+    <br>
+    <br>
+    <a href="/Block"><button class="btn btn-success">CLICK HERE TO GET TO ALL BLOCKS</button></a>
+    <a href="/Mob"><button class="btn btn-primary">CLICK HERE TO GET TO ALL MOBS</button></a>
+    <a href="/NPC"><button class="btn btn-warning">CLICK HERE TO GET TO ALL NPCS</button></a>
+</div>
+</body>
+</html>

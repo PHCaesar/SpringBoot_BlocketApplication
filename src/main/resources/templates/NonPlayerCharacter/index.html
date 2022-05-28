@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Non Player Character</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<!--TODO : ADDING NPCs / REMOVING NPCs / UPDATING NPCs-->
+
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/templates/index.html">BlocketWiki</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="/GameContent">Home</a></li>
+            <li><a href="/Block">Blocks</a></li>
+            <li><a href="/Weapon">Weapons</a></li>
+            <li class="active"><a href="/NPC">NPCs</a></li>
+            <li><a href="/Mob">Mobs</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <h1 class="jumbotron" style="background: none;" th:text="#{app.npc.title}"></h1>
+
+    <!--Table of NPCs-->
+    <table class="block" style="width:100%">
+        <thead>
+        <tr>
+            <th style="width:20%" th:text="#{app.npc.name}"></th>
+            <th style="width:20%" th:text="#{app.npc.health}"></th>
+            <th style="width:20%" th:text="#{app.npc.shopItems}"></th>
+            <th style="width:20%"></th>
+        </tr>
+        <th:npc th:each="npc : ${NPCs}">
+            <tr>
+                <form method="post" action="/NPC/update">
+                    <td><input type="text" th:value="${npc.getName()}" name="name" disabled></td>
+                    <td><input type="text" th:value="${npc.getHealth()}" name="type"></td>
+                    <!--Shopitems that are sold by the NPC-->
+                    <th:item th:each="item : ${npc.getShopItems()}">
+                        <td><p th:text="${item.getName()}"></p></td>
+                        <td><p th:text="${item.getSize()}"></p></td>
+                        <td><p th:text="${item.getDescription()}"></p></td>
+                    </th:item>
+                    <td><input type="submit" value="Update"></td>
+                </form>
+            </tr>
+        </th:npc>
+        </thead>
+    </table>
+</div>
+</body>
+</html>

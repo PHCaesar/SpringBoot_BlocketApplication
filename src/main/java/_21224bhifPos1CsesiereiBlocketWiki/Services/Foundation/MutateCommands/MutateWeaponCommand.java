@@ -9,10 +9,9 @@ import java.time.LocalDateTime;
 @Builder
 @Data
 public class MutateWeaponCommand {
-
-    private LocalDateTime created_at;
     private String description;
+    private String name;
     private int damage;
+    private int size;
     private WeaponClass classification;
-    private String token;
 }
