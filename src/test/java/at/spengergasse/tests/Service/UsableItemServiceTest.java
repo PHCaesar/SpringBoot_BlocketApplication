@@ -63,7 +63,7 @@ public class UsableItemServiceTest {
         assertThrows(IllegalArgumentException.class,()->itemService.insertItem(basicItemData));
         assertEquals(itemService.itemRepository.count(),1);
     }
-
+/*
     @Test
     void ensureItemServiceFindsItem(){
         itemService.insertItem(basicItemData);
@@ -75,7 +75,7 @@ public class UsableItemServiceTest {
                         basicItemData.created_at(),
                         basicItemData.token()));
     }
-
+*/
 
 
 

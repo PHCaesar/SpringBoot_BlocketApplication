@@ -57,7 +57,7 @@ public class MobServiceTest {
         Mob addedReference = mobService.getMobByName(mob.name());
         assertNotNull(addedReference);
     }
-
+/*
     @Test
     void ensureMobServiceInsertsMob(){
         assertEquals(mobService.getAllMobs().size(),0);
@@ -65,6 +65,8 @@ public class MobServiceTest {
         assertEquals(mobService.getAllMobs().size(),1);
         assertEquals(mobService.getAllMobs().get(0),createMob());
     }
+    
+ */
 
     @Test
     void ensureMobServiceInsertsDuplicateMob(){
