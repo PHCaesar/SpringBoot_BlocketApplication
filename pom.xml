@@ -19,7 +19,7 @@
     <name>_2122-4bhif-pos1-csesierei-blocketwiki</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>18</java.version>
+        <java.version>16</java.version>
 
         <querydsl.version>5.0.0</querydsl.version>
         <querydsl-jpa.version>5.0.0</querydsl-jpa.version>
