@@ -1,6 +1,10 @@
 # Dockerfile
-FROM openjdk:18-jdk-slim
-VOLUME /tmp
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+FROM openjdk:18-jdk as build
+COPY . /app
+WORKDIR /app
+RUN chmod +x mvnw
+RUN ./mvnw package
+
+FROM openjdk:18
+COPY --from=build /app/target/*.jar /app.jar
+CMD java -jar /app.jar
